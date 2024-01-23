@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-time-repair-details',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimeRepairDetailsPage implements OnInit {
 
-  constructor() { }
+  project?: String;
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.project = this.route.snapshot.params['project'];
   }
 
 }

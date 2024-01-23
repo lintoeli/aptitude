@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { MetricMenuComponent } from './metric-menu.component';
+import { MetricMenuComponentRoutingModule } from './metric-menu-routing.component';
 
 
 
@@ -11,7 +12,7 @@ import { MetricMenuComponent } from './metric-menu.component';
     CommonModule,
     IonicModule,
     FormsModule,
-    //MetricMenuComponentRoutingModule
+    MetricMenuComponentRoutingModule
   ],
 
   exports: [
@@ -21,4 +22,4 @@ import { MetricMenuComponent } from './metric-menu.component';
     MetricMenuComponent
   ]
 })
-export class HeaderModule {}
+export class MetricMenuModule {}

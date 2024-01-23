@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-metric-menu',
@@ -8,11 +7,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MetricMenuComponent  implements OnInit {
 
-  project?: string;
+  @Input() project?: String;
 
-  constructor(private route: ActivatedRoute) {
-    this.route.params.subscribe(params => {console.log(params)}); 
-    this.route.params.subscribe(params => {this.project = params['project']});
+  constructor() {
+
   }
 
   ngOnInit() {}
