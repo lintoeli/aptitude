@@ -1,6 +1,19 @@
 <app-header></app-header>
 
 
-<p>home</p>
-<ion-button routerLink="/bug-issues-rate">bug issues</ion-button>
-<ion-button routerLink="/bug-issues-rate/angular">bug issues details</ion-button>
+<ion-content>
+  <!-- Barra de busqueda -->
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col size="7">
+        <ion-searchbar placeholder="Search for a project" color="light"></ion-searchbar>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Proyectos -->
+  <app-project-card-list [projects]="projects"></app-project-card-list>
+    
+</ion-content>

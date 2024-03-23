@@ -1,0 +1,29 @@
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Ajusta este valor según prefieras */
+    max-width: 1200px; /* Asegúrate de que sea el mismo ancho que la barra de búsqueda */
+    margin: 0 auto; /* Centra el contenedor de las tarjetas */
+  }
+  
+  ion-card {
+    flex: 1 0 400px;
+    min-width: 300px;
+    max-width: calc(33.333% - 20px); /* Ajusta el margen según sea necesario */
+    margin: 10px; /* Asegúrate de ajustar el margen aquí y en calc() arriba */
+  }
+
+  .icon-col {
+    text-align: center; /* Centra los íconos y números horizontalmente */
+    display: flex;
+    flex-direction: column; /* Organiza los íconos y los números en columnas */
+    justify-content: center; /* Centra los íconos y números verticalmente */
+  }
+  
+  .icon-number {
+    margin-top: 8px; /* Ajusta según sea necesario para alinear con los íconos */
+  }
+
+  .custom-ionic-col{
+    text-align: center;
+  }

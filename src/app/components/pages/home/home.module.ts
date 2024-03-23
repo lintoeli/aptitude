@@ -9,6 +9,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
 import { HeaderModule } from '../../shared/header/header.module';
+import { ProjectCardListModule } from '../../shared/project-card-list/project-card-list.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { HeaderModule } from '../../shared/header/header.module';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    HeaderModule
+    HeaderModule,
+    ProjectCardListModule
   ],
   declarations: [HomePage]
 })
