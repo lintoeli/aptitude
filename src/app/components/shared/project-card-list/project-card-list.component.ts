@@ -8,12 +8,13 @@ import { Project } from 'src/app/models/project.model';
 })
 export class ProjectCardListComponent  implements OnInit {
 
-  @Input() projects: Project[] = []; // Recibe el array de proyectos
+  @Input() projects: Project[] = [];
+  @Input() searchText?: string
 
   constructor() { }
 
   ngOnInit() {
-    console.log(this.projects);
+    console.log(this.searchText);
   }
 
 }

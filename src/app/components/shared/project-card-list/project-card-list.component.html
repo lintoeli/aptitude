@@ -2,7 +2,7 @@
   <!-- Contenedor Flex para las tarjetas -->
   <div class="cards-container">
     <!-- Bucle para generar las tarjetas -->
-    <ion-card *ngFor="let project of projects" button="true" routerLink="/release-freq/{{ project.name }}" style="border-radius: 15px;">
+    <ion-card *ngFor="let project of projects | searchFilter:searchText" button="true" routerLink="/release-freq/{{ project.name }}" style="border-radius: 15px;">
       <ion-card-header>
         <ion-card-title>{{ project.title }}</ion-card-title>
       </ion-card-header>
@@ -23,10 +23,10 @@
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col class="custom-ionic-col">1</ion-col>
-            <ion-col class="custom-ionic-col">2</ion-col>
-            <ion-col class="custom-ionic-col">3</ion-col>
-            <ion-col class="custom-ionic-col">4</ion-col>
+            <ion-col class="custom-ionic-col">{{ project.metricA }}</ion-col>
+            <ion-col class="custom-ionic-col">{{ project.metricB }}</ion-col>
+            <ion-col class="custom-ionic-col">{{ project.metricC }}</ion-col>
+            <ion-col class="custom-ionic-col">{{ project.metricD }}</ion-col>
           </ion-row>
         </ion-grid>
       </ion-card-content>
