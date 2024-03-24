@@ -10,6 +10,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { HeaderModule } from '../../shared/header/header.module';
 import { ProjectCardListModule } from '../../shared/project-card-list/project-card-list.module';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ProjectCardListModule } from '../../shared/project-card-list/project-ca
     IonicModule,
     HomePageRoutingModule,
     HeaderModule,
-    ProjectCardListModule
+    ProjectCardListModule,
+    PipesModule
   ],
   declarations: [HomePage]
 })

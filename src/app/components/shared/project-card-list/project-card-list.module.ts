@@ -4,18 +4,21 @@ import { IonicModule } from '@ionic/angular';
 
 import { ProjectCardListComponent } from './project-card-list.component';
 import { HomePageRoutingModule } from '../../pages/home/home-routing.module';
+import { SearchFilterPipe } from 'src/app/pipes/search-filter.pipe';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
     declarations: [
-        ProjectCardListComponent // Declara tu componente aquí
+        ProjectCardListComponent
     ],
     imports: [
       CommonModule,
       HomePageRoutingModule,
-      IonicModule // Importa IonicModule para usar componentes de Ionic
+      IonicModule,
+      PipesModule
     ],
     exports: [
-        ProjectCardListComponent // Exporta tu componente para que pueda ser utilizado en otros lugares
+        ProjectCardListComponent 
     ]
   })
   export class ProjectCardListModule { }
