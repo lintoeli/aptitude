@@ -1,6 +1,18 @@
 <app-header></app-header>
 
-<p>time to repair details</p>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col> <!-- grafica -->
+  
+      </ion-col>
+  
+      <ion-col> <!-- dashboard -->
+        <app-dashboard [projectTitle] = "project" ></app-dashboard>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
 
 <ion-tab-bar slot="bottom">
     <ion-tab-button tab="tab1" routerLink="/release-freq/{{project}}">

@@ -10,6 +10,8 @@ import { BugIssuesRateDetailsPage } from './bug-issues-rate-details.page';
 import { HeaderModule } from 'src/app/components/shared/header/header.module';
 import { MetricMenuModule } from 'src/app/components/shared/metric-menu/metric-menu.module';
 import { ActivatedRoute } from '@angular/router';
+import { DashboardComponent } from 'src/app/components/shared/dashboard/dashboard.component';
+import { DashboardModule } from 'src/app/components/shared/dashboard/dashboard.component.module';
 
 @NgModule({
   imports: [
@@ -18,6 +20,7 @@ import { ActivatedRoute } from '@angular/router';
     IonicModule,
     BugIssuesRateDetailsPageRoutingModule,
     HeaderModule,
+    DashboardModule
   ],
   declarations: [BugIssuesRateDetailsPage]
 })

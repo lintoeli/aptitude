@@ -8,6 +8,7 @@ import { TimeRepairDetailsPageRoutingModule } from './time-repair-details-routin
 
 import { TimeRepairDetailsPage } from './time-repair-details.page';
 import { HeaderModule } from 'src/app/components/shared/header/header.module';
+import { DashboardModule } from 'src/app/components/shared/dashboard/dashboard.component.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { HeaderModule } from 'src/app/components/shared/header/header.module';
     FormsModule,
     IonicModule,
     TimeRepairDetailsPageRoutingModule,
-    HeaderModule
+    HeaderModule,
+    DashboardModule
   ],
   declarations: [TimeRepairDetailsPage]
 })
