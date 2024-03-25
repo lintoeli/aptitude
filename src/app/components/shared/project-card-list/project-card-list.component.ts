@@ -14,7 +14,7 @@ export class ProjectCardListComponent  implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.searchText);
+    this.projects.sort((a, b) => a.title.localeCompare(b.title));
   }
 
 }
