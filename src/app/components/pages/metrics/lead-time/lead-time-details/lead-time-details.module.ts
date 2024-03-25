@@ -8,6 +8,7 @@ import { LeadTimeDetailsPageRoutingModule } from './lead-time-details-routing.mo
 
 import { LeadTimeDetailsPage } from './lead-time-details.page';
 import { HeaderModule } from 'src/app/components/shared/header/header.module';
+import { DashboardModule } from 'src/app/components/shared/dashboard/dashboard.component.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { HeaderModule } from 'src/app/components/shared/header/header.module';
     FormsModule,
     IonicModule,
     LeadTimeDetailsPageRoutingModule,
-    HeaderModule
+    HeaderModule,
+    DashboardModule
   ],
   declarations: [LeadTimeDetailsPage]
 })

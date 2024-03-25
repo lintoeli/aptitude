@@ -1,0 +1,34 @@
+<ion-card class="dashboard" style="margin-top: 25px;">
+  <ion-card-header *ngIf="project">
+    <ion-card-title>{{ this.project.title }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item lines="none">
+      <ion-label>Diferencia mes anterior</ion-label>
+      <ion-note slot="end" color="secondary" class="data-number">+2,5</ion-note>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>Valor actual</ion-label>
+      <ion-note slot="end" color="success" class="data-number">8,9</ion-note>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>Mejor valor (14/02/2019)</ion-label>
+      <ion-note slot="end" color="success" class="data-number">6,5</ion-note>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>Peor valor (21/09/2020)</ion-label>
+      <ion-note slot="end" color="danger" class="data-number">11,2</ion-note>
+    </ion-item>
+
+    <hr class="custom-hr" />
+
+    <ion-item lines="none">
+      <ion-label>Mejor valor global (Stable Diffusion)</ion-label>
+      <ion-note slot="end" color="success" class="data-number">5,4</ion-note>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>Peor valor global (TensorFlow)</ion-label>
+      <ion-note slot="end" color="danger" class="data-number">14,6</ion-note>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
