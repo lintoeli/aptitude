@@ -9,6 +9,8 @@ import { ReleaseFreqDetailsPageRoutingModule } from './release-freq-details-rout
 import { ReleaseFreqDetailsPage } from './release-freq-details.page';
 import { HeaderModule } from 'src/app/components/shared/header/header.module';
 import { DashboardModule } from 'src/app/components/shared/dashboard/dashboard.component.module';
+import { MetricMenuModule } from 'src/app/components/shared/metric-menu/metric-menu.module';
+import { ChartComponent } from 'src/app/components/shared/chart/chart.component';
 
 @NgModule({
   imports: [
@@ -17,7 +19,9 @@ import { DashboardModule } from 'src/app/components/shared/dashboard/dashboard.c
     IonicModule,
     ReleaseFreqDetailsPageRoutingModule,
     HeaderModule,
-    DashboardModule
+    DashboardModule,
+    MetricMenuModule,
+    ChartComponent
   ],
   declarations: [ReleaseFreqDetailsPage]
 })

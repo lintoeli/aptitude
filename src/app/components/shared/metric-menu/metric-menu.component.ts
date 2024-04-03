@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-metric-menu',
@@ -9,10 +10,16 @@ export class MetricMenuComponent  implements OnInit {
 
   @Input() project?: String;
 
-  constructor() {
+  constructor(private router: Router) {
 
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
+
+  navigateTo(path: string): void {
+    this.router.navigate([path], {replaceUrl: true});
+  }
 
 }
