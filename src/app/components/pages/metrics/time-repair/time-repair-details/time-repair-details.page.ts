@@ -11,16 +11,24 @@ import { ChartService } from 'src/app/services/chart/chart.service';
 export class TimeRepairDetailsPage implements OnInit {
 
   public project?: String;
+  public doubleChart: boolean = false;
+  
   constructor(private route: ActivatedRoute, private chartService: ChartService, private router: Router) { }
 
   ngOnInit() {
     this.project = this.route.snapshot.params['project'];
+    this.doubleChart = this.chartService.doubleChart
 
     this.router.events.pipe(
       first(event => event instanceof NavigationEnd)
     ).subscribe(event => {
-      console.log('cambio de ruta:', event);
+      console.log('cambio de ruta', event);
       
     });
+  }
+
+  switchChart(){
+    this.chartService.doubleChart = !this.chartService.doubleChart;
+    this.doubleChart = !this.doubleChart;
   }
 }

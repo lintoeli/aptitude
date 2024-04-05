@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { AgChartsAngular } from 'ag-charts-angular';
 import { AgChartOptions } from 'ag-charts-community';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ChartService } from 'src/app/services/chart/chart.service';
 
 @Component({
@@ -18,6 +18,12 @@ import { ChartService } from 'src/app/services/chart/chart.service';
   imports: [AgChartsAngular],
 })
 export class ChartComponent implements OnInit, OnDestroy{
+
+  @Input() useTwoSeries: boolean = false;
+
+  private useTwoSeriesSubject = new BehaviorSubject<boolean>(this.useTwoSeries);
+  useTwoSeries$: Observable<boolean> = this.useTwoSeriesSubject.asObservable();
+
   public chartOptions!: AgChartOptions;
   private subscription: Subscription = new Subscription();
 
@@ -26,18 +32,33 @@ export class ChartComponent implements OnInit, OnDestroy{
   }
   
   ngOnInit(): void {
-    this.subscription.add(
-      this.chartService.currentChartOptions.subscribe((options) => {
-        if (options) {
-          this.chartOptions = options;
-        } else {
-          this.chartOptions = this.chartService.dafaultChartOptions;
-        }
-      })
-    );
+    this.useTwoSeries$.subscribe(useTwo => {
+      this.loadChartOptions(useTwo);
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['useTwoSeries']) {
+      this.useTwoSeriesSubject.next(changes['useTwoSeries'].currentValue);
+    }
+  }
+
+  private loadChartOptions(useTwoSeries: boolean): void {
+    
+    if (useTwoSeries) {
+      this.chartService.doubleChart = false;
+      this.chartService.updateChartOptions(this.chartService.dafaultChartOptionsWithTwoSeries);
+      this.chartOptions = this.chartService.dafaultChartOptionsWithTwoSeries;
+    } else {
+      this.chartService.doubleChart = true;
+      this.chartService.updateChartOptions(this.chartService.dafaultSimpleChartOptions);
+      this.chartOptions = this.chartService.dafaultSimpleChartOptions;
+    }
+    // Aquí puedes implementar la lógica para aplicar las opciones al gráfico
   }
 
   ngOnDestroy(): void {
+    this.chartService.doubleChart = false;
     this.subscription.unsubscribe();
   }
 
