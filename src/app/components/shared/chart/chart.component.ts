@@ -8,10 +8,12 @@ import { ChartService } from 'src/app/services/chart/chart.service';
   selector: 'app-chart',
   standalone: true,
   template:
-  `<ag-charts-angular
-    [options]="chartOptions">
-    class="chartFit"
-   </ag-charts-angular>`,
+  `<div class="chart-container">
+      <ag-charts-angular
+      [options]="chartOptions">
+    </ag-charts-angular>
+  </div>
+  `,
   styleUrls: ['./chart.component.scss'],
   imports: [AgChartsAngular],
 })
