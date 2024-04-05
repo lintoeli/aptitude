@@ -20,7 +20,7 @@ export class ChartService {
       { month: 'Nov', avgTemp: 8.9, iceCreamSales: 200000 },
     ],
     // Series: Defines which chart type and data to use
-    series: [{ type: 'bar', xKey: 'month', yKey: 'iceCreamSales' }],
+    series: [{ type: 'bar', xKey: 'month', yKey: 'iceCreamSales', fill: "#45d918" }],
 
     background: {
       fill: '#121212', // Color de fondo del gráfico
@@ -65,8 +65,8 @@ export class ChartService {
       { month: 'Nov', avgTemp: 8.9, iceCreamSales: 200000 },
     ],
     // Series: Defines which chart type and data to use
-    series: [{ type: 'bar', xKey: 'month', yKey: 'iceCreamSales' },
-             { type: 'bar', xKey: 'month', yKey: 'avgTemp' }],
+    series: [{ type: 'bar', xKey: 'month', yKey: 'iceCreamSales', fill: "#45d918" },
+             { type: 'bar', xKey: 'month', yKey: 'avgTemp', fill: "#ffea00" }],
 
     background: {
       fill: '#121212', // Color de fondo del gráfico
@@ -114,6 +114,8 @@ export class ChartService {
   constructor() {}
 
   updateChartOptions(options: AgChartOptions) {
+    let optObject = options as Object;
+    console.log(optObject);
     this.chartOptionsSource.next(options);
   }
 }
