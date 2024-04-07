@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AgChartOptions } from 'ag-charts-community';
+import { Project } from 'src/app/models/project.model';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,11 @@ export class ChartService {
   //Flag de grafico simple/doble
   private doubleChartSource = new BehaviorSubject<boolean>(false);
   doubleChart$ = this.doubleChartSource.asObservable();
+
+  // Proyecto secundario
+  private sideProjectSource = new BehaviorSubject<Project | undefined>(undefined);
+  sideProject$ = this.sideProjectSource.asObservable();
+
   //Opciones gráfico SIMPLE
   public dafaultSimpleChartOptions: AgChartOptions =  {
     // Data: Data to be displayed in the chart
@@ -128,6 +134,11 @@ export class ChartService {
   toggleDoubleChart() {
     const current = this.doubleChartSource.getValue();
     this.doubleChartSource.next(!current);
+  }
+
+  // Cambia el proyecto secundario
+  setSideProject(project: Project | undefined) {
+    this.sideProjectSource.next(project);
   }
 
   // Pone el grafico en simple cuando se cierra el chart

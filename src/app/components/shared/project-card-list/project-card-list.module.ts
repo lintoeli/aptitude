@@ -4,7 +4,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { ProjectCardListComponent } from './project-card-list.component';
 import { HomePageRoutingModule } from '../../pages/home/home-routing.module';
-import { SearchFilterPipe } from 'src/app/pipes/search-filter.pipe';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({

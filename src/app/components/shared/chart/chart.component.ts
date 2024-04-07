@@ -27,7 +27,18 @@ export class ChartComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     // Inicializamos el gráfico con las opciones correctas
-    this.loadChartOptions(this.useTwoSeries);
+    //this.loadChartOptions(this.useTwoSeries);
+    this.subscription.add(
+      this.chartService.sideProject$.subscribe(project => {
+        if (project) {
+          // Aquí ajustas las opciones del gráfico basadas en el proyecto seleccionado
+          this.loadChartOptions(true);
+        } else {
+          // Opcionalmente, maneja el caso de "null" si quieres resetear el gráfico o establecer opciones predeterminadas
+          this.loadChartOptions(false);
+        }
+      })
+    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
