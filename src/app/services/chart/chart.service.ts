@@ -7,7 +7,8 @@ import { AgChartOptions } from 'ag-charts-community';
 })
 export class ChartService {
   //Flag de grafico simple/doble
-  public doubleChart: boolean = false; 
+  private doubleChartSource = new BehaviorSubject<boolean>(false);
+  doubleChart$ = this.doubleChartSource.asObservable();
   //Opciones gráfico SIMPLE
   public dafaultSimpleChartOptions: AgChartOptions =  {
     // Data: Data to be displayed in the chart
@@ -28,22 +29,23 @@ export class ChartService {
 
     axes: [
       {
-        // Para los ejes, ajusta según sea necesario
+        // Ajustes del eje izquierdo (proyecto principal)
         type: 'number',
         position: 'left',
         label: {
-          color: 'white', // Color de la fuente de las etiquetas del eje
+          color: 'white', 
         },
       },
       {
+        // Ajustes del eje inferior (fechas de evaluaciones)
         type: 'category',
         position: 'bottom',
         label: {
-          color: 'white', // Color de la fuente de las etiquetas del eje
+          color: 'white', 
         }
       }
     ],
-
+    // Desactiva el mostrar/ocultar elementos del grafico
     legend: {
       item: {
           toggleSeriesVisible: false,
@@ -74,31 +76,35 @@ export class ChartService {
 
     axes: [
       {
-        // Para los ejes, ajusta según sea necesario
+        // Ajustes del eje izquierdo (proyecto principal)
         type: 'number',
         position: 'left',
         keys: ['iceCreamSales'],
         label: {
-          color: 'white', // Color de la fuente de las etiquetas del eje
+          color: 'white',
         },
       },
+
       {
+        // Ajustes del eje derecho (proyecto secundario)
         type: 'number',
         position: 'right',
         keys: ['avgTemp'],
         label: {
-          color: 'white', // Color de la fuente de las etiquetas del eje
+          color: 'white', 
         }
       },
       {
+        // Ajustes del eje inferior (fechas de evaluaciones)
         type: 'category',
         position: 'bottom',
         label: {
-          color: 'white', // Color de la fuente de las etiquetas del eje
+          color: 'white', 
         }
       },
     ],
 
+    // Desactiva el mostrar/ocultar elementos del grafico
     legend: {
       item: {
           toggleSeriesVisible: false,
@@ -115,7 +121,17 @@ export class ChartService {
 
   updateChartOptions(options: AgChartOptions) {
     let optObject = options as Object;
-    console.log(optObject);
     this.chartOptionsSource.next(options);
+  }
+
+  // Cambia el estado de la flag para mostrar o no dos series
+  toggleDoubleChart() {
+    const current = this.doubleChartSource.getValue();
+    this.doubleChartSource.next(!current);
+  }
+
+  // Pone el grafico en simple cuando se cierra el chart
+  disableDoubleChartOnDestroy(){
+    this.doubleChartSource.next(false);
   }
 }
