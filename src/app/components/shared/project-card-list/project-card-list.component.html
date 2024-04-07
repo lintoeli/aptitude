@@ -2,7 +2,7 @@
   <!-- Contenedor Flex para las tarjetas -->
   <div class="cards-container">
     <!-- Bucle para generar las tarjetas -->
-    <ion-card *ngFor="let project of projects | searchFilter:searchText" button="true" routerLink="/release-freq/{{ project.name }}" style="border-radius: 15px;">
+    <ion-card *ngFor="let project of projects | searchFilter:searchText" button="true" (click)="navigateTo('/release-freq/' + project.name)" style="border-radius: 15px;">
       <ion-card-header>
         <ion-card-title>{{ project.title }}</ion-card-title>
       </ion-card-header>
