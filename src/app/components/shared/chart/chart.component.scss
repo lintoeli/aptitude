@@ -1,0 +1,6 @@
+.chart-container {
+    margin: 15px 25px 0 60px; /* Este margen superior puede ajustarse según sea necesario para alinear con tu otro componente */
+    max-width: 90%; /* Esto hará que el ancho máximo sea el 80% del contenedor padre, como el dashboard */
+    /* Asegúrate de que el contenedor del gráfico tenga una altura definida para que el gráfico se muestre correctamente */
+    height: 450px; /* Ajusta esto según sea necesario */
+  }

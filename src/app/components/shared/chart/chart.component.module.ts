@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { MetricMenuComponent } from './metric-menu.component';
+import { ChartComponent } from './chart.component';
 
 
 
@@ -10,14 +10,14 @@ import { MetricMenuComponent } from './metric-menu.component';
   imports: [
     CommonModule,
     IonicModule,
-    FormsModule
+    FormsModule,
   ],
 
   exports: [
-    MetricMenuComponent
+    //ChartComponent
   ],
   declarations: [
-    MetricMenuComponent
+    //ChartComponent
   ]
 })
-export class MetricMenuModule {}
+export class ChartModule {}

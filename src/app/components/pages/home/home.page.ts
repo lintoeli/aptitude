@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
-import { ProjectService } from 'src/app/services/project.service';
+import { ChartService } from 'src/app/services/chart/chart.service';
+import { ProjectService } from 'src/app/services/project/project.service';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +11,11 @@ import { ProjectService } from 'src/app/services/project.service';
 export class HomePage implements OnInit {
   projects: Project[] = []
   searchText: string = '';
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService, private chartService: ChartService) { }
 
   ngOnInit() {
+    // Limpiamos la flag de grafico doble en los detalles
+    this.chartService.disableDoubleChartOnDestroy();
     // Cargamos los proyectos
     this.projects = this.projectService.getAllProjects();
   }
