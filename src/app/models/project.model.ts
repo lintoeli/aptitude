@@ -5,5 +5,4 @@ export interface Project {
     metricB?: number;
     metricC?: number;
     metricD?: number;
-    // Agrega más propiedades según necesites
   }

@@ -16,6 +16,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     // Limpiamos la flag de grafico doble en los detalles
     this.chartService.disableDoubleChartOnDestroy();
+    this.chartService.setSideProject(undefined);
     // Cargamos los proyectos
     this.projects = this.projectService.getAllProjects();
   }
