@@ -6,22 +6,23 @@ import { Project } from '../../models/project.model';
 })
 export class ProjectService {
 
-  projects: Project[] = [{title: 'Angular', name: 'angular', metricA: 1, metricB: 2, metricC: 3, metricD: 4},
-                        {title: 'TensorFlow', name: 'tensorflow', metricA: 1, metricB: 2, metricC: 3, metricD: 4},
-                        {title: 'Spring Boot', name: 'springboot', metricA: 1, metricB: 2, metricC: 3, metricD: 4},
-                        {title: 'Electron', name: 'electron', metricA: 2, metricB: 5, metricC: 4, metricD: 3},
-                        {title: 'Golang', name: 'golang', metricA: 4, metricB: 2, metricC: 5, metricD: 1},
-                        {title: 'React', name: 'react', metricA: 2, metricB: 3, metricC: 4, metricD: 5},
-                        {title: 'Vue.js', name: 'vuejs', metricA: 3, metricB: 4, metricC: 5, metricD: 6},
-                        {title: 'Django', name: 'django', metricA: 2, metricB: 1, metricC: 3, metricD: 4},
-                        {title: 'Flask', name: 'flask', metricA: 1, metricB: 3, metricC: 2, metricD: 5},
-                        {title: 'Ruby on Rails', name: 'rubyonrails', metricA: 3, metricB: 2, metricC: 1, metricD: 4},
-                        {title: 'Node.js', name: 'nodejs', metricA: 4, metricB: 3, metricC: 2, metricD: 1},
-                        {title: 'Express', name: 'express', metricA: 2, metricB: 2, metricC: 3, metricD: 3},
-                        {title: 'Laravel', name: 'laravel', metricA: 1, metricB: 4, metricC: 2, metricD: 2},
-                        {title: 'SwiftUI', name: 'swiftui', metricA: 5, metricB: 1, metricC: 4, metricD: 3},
-                        {title: 'Kotlin', name: 'kotlin', metricA: 3, metricB: 3, metricC: 3, metricD: 3}
-                        ]
+  projects: Project[] = [
+      {title: 'Angular', name: 'angular', releaseFrequency: 1, leadTime: 2, timeToRepair: 3, bugIssuesRate: 4},
+      {title: 'TensorFlow', name: 'tensorflow', releaseFrequency: 1, leadTime: 2, timeToRepair: 3, bugIssuesRate: 4},
+      {title: 'Spring Boot', name: 'springboot', releaseFrequency: 1, leadTime: 2, timeToRepair: 3, bugIssuesRate: 4},
+      {title: 'Electron', name: 'electron', releaseFrequency: 2, leadTime: 5, timeToRepair: 4, bugIssuesRate: 3},
+      {title: 'Golang', name: 'golang', releaseFrequency: 4, leadTime: 2, timeToRepair: 5, bugIssuesRate: 1},
+      {title: 'React', name: 'react', releaseFrequency: 2, leadTime: 3, timeToRepair: 4, bugIssuesRate: 5},
+      {title: 'Vue.js', name: 'vuejs', releaseFrequency: 3, leadTime: 4, timeToRepair: 5, bugIssuesRate: 6},
+      {title: 'Django', name: 'django', releaseFrequency: 2, leadTime: 1, timeToRepair: 3, bugIssuesRate: 4},
+      {title: 'Flask', name: 'flask', releaseFrequency: 1, leadTime: 3, timeToRepair: 2, bugIssuesRate: 5},
+      {title: 'Ruby on Rails', name: 'rubyonrails', releaseFrequency: 3, leadTime: 2, timeToRepair: 1, bugIssuesRate: 4},
+      {title: 'Node.js', name: 'nodejs', releaseFrequency: 4, leadTime: 3, timeToRepair: 2, bugIssuesRate: 1},
+      {title: 'Express', name: 'express', releaseFrequency: 2, leadTime: 2, timeToRepair: 3, bugIssuesRate: 3},
+      {title: 'Laravel', name: 'laravel', releaseFrequency: 1, leadTime: 4, timeToRepair: 2, bugIssuesRate: 2},
+      {title: 'SwiftUI', name: 'swiftui', releaseFrequency: 5, leadTime: 1, timeToRepair: 4, bugIssuesRate: 3},
+      {title: 'Kotlin', name: 'kotlin', releaseFrequency: 3, leadTime: 3, timeToRepair: 3, bugIssuesRate: 3}
+  ];
 
   constructor() { }
 

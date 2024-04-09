@@ -1,8 +1,8 @@
 export interface Project {
     title: string;
     name: string;
-    metricA?: number;
-    metricB?: number;
-    metricC?: number;
-    metricD?: number;
+    releaseFrequency?: number;
+    leadTime?: number;
+    timeToRepair?: number;
+    bugIssuesRate?: number;
   }
