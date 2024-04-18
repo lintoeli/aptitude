@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, range } from 'rxjs';
 import { AgChartOptions } from 'ag-charts-community';
 import { Project } from 'src/app/models/project.model';
+import { BenchmarkService } from '../benchmark/benchmark.service';
+import { ProjectService } from '../project/project.service';
+import { Benchmark } from 'src/app/models/benchmark.model';
+import { Chart } from 'src/app/models/chart.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -123,11 +127,10 @@ export class ChartService {
   private chartOptionsSource = new BehaviorSubject<AgChartOptions | null>(null);
   currentChartOptions = this.chartOptionsSource.asObservable();
 
-  constructor() {}
+  constructor(private benchmarkService: BenchmarkService, private projectService: ProjectService) {}
 
-  updateChartOptions(options: AgChartOptions) {
-    let optObject = options as Object;
-    this.chartOptionsSource.next(options);
+  updateChartOptions(newOptions: Chart) {
+    this.chartOptionsSource.next(newOptions as  AgChartOptions);
   }
 
   // Cambia el estado de la flag para mostrar o no dos series
@@ -145,4 +148,65 @@ export class ChartService {
   disableDoubleChartOnDestroy(){
     this.doubleChartSource.next(false);
   }
+
+  buildChart(metric: string, mainProject: string, sideProject? : string) : void {
+    // Obtenemos la métrica a representar en el gráfico
+    const keyMetric = this.keyableMetric(metric);
+
+    if (sideProject){
+      //console.log('aqui entra')
+      // Obtenemos la configuración actual del gráfico
+      
+      let optionsObject = this.dafaultChartOptionsWithTwoSeries as Chart;
+      optionsObject.data = this.benchmarkService.findOneMetricBenchmarksForTwoProjects(keyMetric as keyof Benchmark, mainProject, sideProject);
+      console.log('datos a cargar DOBLE', optionsObject.data)
+      optionsObject.series[0].xKey = 'period'
+      optionsObject.series[0].yKey = 'mainMetric';
+      optionsObject.series[1] = { xKey: 'period', yKey: 'sideMetric', type: 'bar', fill: '#fccf03'};
+      optionsObject.axes[0].keys = ['mainMetric'];
+      optionsObject.axes[1].keys = ['sideMetric'];
+
+      this.updateChartOptions(optionsObject);
+      this.currentChartOptions.toPromise().then(res => console.log(res));
+      
+    } else {
+      let optionsObject = this.dafaultSimpleChartOptions as Chart;
+
+      optionsObject.data = this.benchmarkService.findOneMetricBenchmarks(keyMetric as keyof Benchmark, mainProject); // Cambiamos el array de datos
+      console.log('datos a cargar SIMPLE', optionsObject.data)
+
+      optionsObject.series[0].xKey = 'period'
+      optionsObject.series[0].yKey = 'mainMetric';
+
+      this.updateChartOptions(optionsObject);
+
+    }
+  }
+
+  private keyableMetric(metric: string): string {
+    switch  (metric) {
+      case 'time-repair':
+        return 'timeToRepair';
+      case 'bug-issues-rate':
+        return 'bugIssuesRate';
+      case 'lead-time':
+        return 'leadTime'
+      case 'release-freq':
+        return 'releaseFrequency';
+
+      default:
+        return metric;
+    }
+  }
+
+  // private mergeBenchmarks(mainBenchmarks: Object[], sideBenchmarks: Object[]){
+  //   return mainBenchmarks.map(item => {
+  //     const match = sideBenchmarks.find(bItem => bItem.period === item.period);
+  //     return {
+  //         period: item.period,
+  //         releaseFrequency: item.releaseFrequency,
+  //         sideReleaseFrequency: match ? match.releaseFrequency : null
+  //     };
+  // });
+  // }
 }

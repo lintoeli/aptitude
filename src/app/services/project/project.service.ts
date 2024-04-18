@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Project } from '../../models/project.model';
+import { BenchmarkService } from '../benchmark/benchmark.service';
+import { Benchmark } from 'src/app/models/benchmark.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,13 +26,39 @@ export class ProjectService {
       {title: 'Kotlin', name: 'kotlin', releaseFrequency: 3, leadTime: 3, timeToRepair: 3, bugIssuesRate: 3}
   ];
 
-  constructor() { }
+  constructor(private benchmarkService: BenchmarkService) { }
 
   getAllProjects(){
+    // Se deben actualizar los proyectos
+    this.updateLastBenchmarks(); 
     return this.projects;
   }
 
   findOneProjectByName(name: string){
     return this.projects.filter(p => p.name === name)[0];
+  }
+
+  /**
+   * Actualiza las últimas métricas de todos los proyectos
+   */
+  private updateLastBenchmarks(){
+    this.projects.forEach((project) =>{
+      const lastBenchmark = this.benchmarkService.getLastProjectBenchmark(project.name);
+      if (lastBenchmark != null){
+        this.updateMetrics(project, lastBenchmark);
+      }
+    });
+  }
+
+  /**
+   * Setea en un proyecto la información de sus métricas más recientes
+   * @param project: Proyecto a actualizar 
+   * @param benchmark: Últimos valores registrados 
+   */
+  private updateMetrics(project: Project, benchmark: Benchmark){
+    project.bugIssuesRate = benchmark.bugIssuesRate;
+    project.leadTime = benchmark.leadTime;
+    project.releaseFrequency = benchmark.releaseFrequency;
+    project.timeToRepair = benchmark.timeToRepair;
   }
 }

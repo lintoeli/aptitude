@@ -1,10 +1,9 @@
-import { Project } from "./project.model";
 
-interface Benchmark {
-    project: Project;
+export interface Benchmark {
+    project: string;
     releaseFrequency: number;
     leadTime: number;
     timeToRepair: number;
     bugIssuesRate: number;
-    date: Date; // Utilizamos el tipo Date de JavaScript para representar fechas.
+    period: String; // Formato SX-202Y
   }

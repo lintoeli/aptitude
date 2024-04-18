@@ -12,10 +12,18 @@ import { ProjectService } from 'src/app/services/project/project.service';
 })
 export class TimeRepairDetailsPage implements OnInit {
 
-  public project?: String;
+  // Metrica a representar
+  public metric!: string;
 
+  // Proyecto a cargar
+  public project!: string;
+
+  // Lista de todos los proyectos
   public allProjects!: Project[];
+
+  // Proyecto para comparar
   public sideProject?: Project;
+
   public doubleChart!: boolean;
   private subscription: Subscription = new Subscription();
 
@@ -27,15 +35,23 @@ export class TimeRepairDetailsPage implements OnInit {
               private projetService: ProjectService) {}
 
   ngOnInit() {
+    // Obtenemos de la ruta la métrica que hay que mostrar
+    this.metric = this.router.url.split('/')[1];
     
     // Obtenemos de la ruta el nombre del proyecto
     this.project = this.route.snapshot.params['project'];
 
+    // Obtenemos benchmarks:
+    // if (this.project){
+    //   this.chartService.buildChart(this.metric, this.project)
+    // }
+  
     // Obtenemos la lista de proyectos
     this.allProjects = this.projetService.getAllProjects();
     
     // Aquí nos suscribimos al estado de doubleChart
     this.subscription.add(this.chartService.doubleChart$.subscribe(doubleChart => {
+      //this.chartService.buildChart(this.metric, this.project)
       this.doubleChart = doubleChart;
     }));
 
@@ -43,12 +59,15 @@ export class TimeRepairDetailsPage implements OnInit {
     this.subscription.add(this.chartService.sideProject$.subscribe(project => {
       this.sideProject = project;
       if(project){
+        console.log('proyecto seleccionado', project);
+        this.chartService.buildChart(this.metric, this.project, project.name);
         this.dropdownName = project.title;
       } else {
+        this.chartService.buildChart(this.metric, this.project)
         this.dropdownName = "Selecciona un proyecto para comparar";
       }
     }));
-    
+
 
   }
 
@@ -63,7 +82,14 @@ export class TimeRepairDetailsPage implements OnInit {
   }
 
   changeSideProject(event: any){
+    console.log(event.target.value);
+    console.log(typeof event.target.value);
     this.sideProject = this.projetService.findOneProjectByName(event.target.value);
     this.chartService.setSideProject(this.sideProject);
+    if(event.target.value !== 'undefined'){
+      this.chartService.buildChart(this.metric, this.project, this.sideProject.name)
+    } else{
+      this.chartService.buildChart(this.metric, this.project);
+    }
   }
 }
