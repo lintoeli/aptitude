@@ -28,20 +28,29 @@ export class ProjectService {
 
   constructor(private benchmarkService: BenchmarkService) { }
 
-  getAllProjects(){
+  /**
+   * Obtiene todos los proyectos cargados
+   * @returns Project[], array con todos los proyectos cargados y actualizados 
+   */
+  public getAllProjects(): Project[]{
     // Se deben actualizar los proyectos
     this.updateLastBenchmarks(); 
     return this.projects;
   }
 
-  findOneProjectByName(name: string){
+  /**
+   * Obtiene un proyecto del array de proyectos cargados a partir de un nombre
+   * @param name, nombre del proyecto a obtener 
+   * @returns Project, un proyecto dado su atributo name
+   */
+  public findOneProjectByName(name: string): Project{
     return this.projects.filter(p => p.name === name)[0];
   }
 
   /**
    * Actualiza las últimas métricas de todos los proyectos
    */
-  private updateLastBenchmarks(){
+  private updateLastBenchmarks(): void{
     this.projects.forEach((project) =>{
       const lastBenchmark = this.benchmarkService.getLastProjectBenchmark(project.name);
       if (lastBenchmark != null){

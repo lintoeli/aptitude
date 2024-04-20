@@ -19,170 +19,60 @@ export class ChartService {
   private sideProjectSource = new BehaviorSubject<Project | undefined>(undefined);
   sideProject$ = this.sideProjectSource.asObservable();
 
-  //Opciones gráfico SIMPLE
-  public dafaultSimpleChartOptions: AgChartOptions =  {
-    // Data: Data to be displayed in the chart
-    data: [
-      { month: 'Jan', avgTemp: 2.3, iceCreamSales: 162000 },
-      { month: 'Mar', avgTemp: 6.3, iceCreamSales: 302000 },
-      { month: 'May', avgTemp: 16.2, iceCreamSales: 800000 },
-      { month: 'Jul', avgTemp: 22.8, iceCreamSales: 1254000 },
-      { month: 'Sep', avgTemp: 14.5, iceCreamSales: 950000 },
-      { month: 'Nov', avgTemp: 8.9, iceCreamSales: 200000 },
-    ],
-    // Series: Defines which chart type and data to use
-    series: [{ type: 'bar', xKey: 'month', yKey: 'iceCreamSales', fill: "#45d918" }],
+  constructor(private benchmarkService: BenchmarkService) {}
 
-    background: {
-      fill: '#121212', // Color de fondo del gráfico
-    },
-
-    axes: [
-      {
-        // Ajustes del eje izquierdo (proyecto principal)
-        type: 'number',
-        position: 'left',
-        label: {
-          color: 'white', 
-        },
-      },
-      {
-        // Ajustes del eje inferior (fechas de evaluaciones)
-        type: 'category',
-        position: 'bottom',
-        label: {
-          color: 'white', 
-        }
-      }
-    ],
-    // Desactiva el mostrar/ocultar elementos del grafico
-    legend: {
-      item: {
-          toggleSeriesVisible: false,
-      }
-  }
-
-  };
-
-
-  //Opciones gráfico DOBLE
-  public dafaultChartOptionsWithTwoSeries: AgChartOptions =  {
-    // Data: Data to be displayed in the chart
-    data: [
-      { month: 'Jan', avgTemp: 2.3, iceCreamSales: 162000 },
-      { month: 'Mar', avgTemp: 6.3, iceCreamSales: 302000 },
-      { month: 'May', avgTemp: 16.2, iceCreamSales: 800000 },
-      { month: 'Jul', avgTemp: 22.8, iceCreamSales: 1254000 },
-      { month: 'Sep', avgTemp: 14.5, iceCreamSales: 950000 },
-      { month: 'Nov', avgTemp: 8.9, iceCreamSales: 200000 },
-    ],
-    // Series: Defines which chart type and data to use
-    series: [{ type: 'bar', xKey: 'month', yKey: 'iceCreamSales', fill: "#45d918" },
-             { type: 'bar', xKey: 'month', yKey: 'avgTemp', fill: "#ffea00" }],
-
-    background: {
-      fill: '#121212', // Color de fondo del gráfico
-    },
-
-    axes: [
-      {
-        // Ajustes del eje izquierdo (proyecto principal)
-        type: 'number',
-        position: 'left',
-        keys: ['iceCreamSales'],
-        label: {
-          color: 'white',
-        },
-      },
-
-      {
-        // Ajustes del eje derecho (proyecto secundario)
-        type: 'number',
-        position: 'right',
-        keys: ['avgTemp'],
-        label: {
-          color: 'white', 
-        }
-      },
-      {
-        // Ajustes del eje inferior (fechas de evaluaciones)
-        type: 'category',
-        position: 'bottom',
-        label: {
-          color: 'white', 
-        }
-      },
-    ],
-
-    // Desactiva el mostrar/ocultar elementos del grafico
-    legend: {
-      item: {
-          toggleSeriesVisible: false,
-      }
-  }
-
-  };
-    
-  
-  private chartOptionsSource = new BehaviorSubject<AgChartOptions | null>(null);
-  currentChartOptions = this.chartOptionsSource.asObservable();
-
-  constructor(private benchmarkService: BenchmarkService, private projectService: ProjectService) {}
-
-  updateChartOptions(newOptions: Chart) {
-    this.chartOptionsSource.next(newOptions as  AgChartOptions);
-  }
-
-  // Cambia el estado de la flag para mostrar o no dos series
-  toggleDoubleChart() {
-    const current = this.doubleChartSource.getValue();
-    this.doubleChartSource.next(!current);
-  }
-
-  // Cambia el proyecto secundario
-  setSideProject(project: Project | undefined) {
+  /**
+   * Cambia el proyecto secundario
+   * @param project, nuevo proyecto secundario
+   */
+  public setSideProject(project: Project | undefined): void {
     this.sideProjectSource.next(project);
   }
 
-  // Pone el grafico en simple cuando se cierra el chart
-  disableDoubleChartOnDestroy(){
+  /**
+   * Pone el grafico en simple cuando se cierra el chart
+   */
+  public disableDoubleChartOnDestroy(): void{
     this.doubleChartSource.next(false);
   }
 
-  buildChart(metric: string, mainProject: string, sideProject? : string) : void {
+  /**
+   * Construye la configuración del gráfico para que pueda ser mostrado
+   * 
+   * @param metric, métrica a representar 
+   * @param mainProject, proyecto principal a representar 
+   * @param sideProject, (opcional) proyecto secundario a representar y comparar con el principal 
+   * @returns AgChartOptions, una clase de configuración de gráfico para poder representarlo en el componente
+   */
+  public buildChart(metric: string, mainProject: string, sideProject? : string) : AgChartOptions {
     // Obtenemos la métrica a representar en el gráfico
     const keyMetric = this.keyableMetric(metric);
 
+    // Creamos una nueva configuración "en blanco"
+    let optionsObject = this.createBlankChartOptions();
+
     if (sideProject){
-      //console.log('aqui entra')
-      // Obtenemos la configuración actual del gráfico
-      
-      let optionsObject = this.dafaultChartOptionsWithTwoSeries as Chart;
+      // Cargamos los benchmarks de ambos proyectos en la configuración
       optionsObject.data = this.benchmarkService.findOneMetricBenchmarksForTwoProjects(keyMetric as keyof Benchmark, mainProject, sideProject);
-      console.log('datos a cargar DOBLE', optionsObject.data)
-      optionsObject.series[0].xKey = 'period'
-      optionsObject.series[0].yKey = 'mainMetric';
-      optionsObject.series[1] = { xKey: 'period', yKey: 'sideMetric', type: 'bar', fill: '#fccf03'};
-      optionsObject.axes[0].keys = ['mainMetric'];
-      optionsObject.axes[1].keys = ['sideMetric'];
 
-      this.updateChartOptions(optionsObject);
-      this.currentChartOptions.toPromise().then(res => console.log(res));
-      
+      // Creamos la segunda serie de barras para representar el proyecto secundario
+      optionsObject.series.push({ xKey: 'period', yKey: 'sideMetric', type: 'bar', fill: '#fccf03'});
+
+      // Agregamos el eje del proyecto secundario para que sea visible en el gráfico
+      optionsObject.axes.push({type: 'number', position: 'right', keys: ['sideMetric'], label: {color: '#121212'}});
+
     } else {
-      let optionsObject = this.dafaultSimpleChartOptions as Chart;
-
-      optionsObject.data = this.benchmarkService.findOneMetricBenchmarks(keyMetric as keyof Benchmark, mainProject); // Cambiamos el array de datos
-      console.log('datos a cargar SIMPLE', optionsObject.data)
-
-      optionsObject.series[0].xKey = 'period'
-      optionsObject.series[0].yKey = 'mainMetric';
-
-      this.updateChartOptions(optionsObject);
-
+      // Cargamos los benchmarks del proyecto principal
+      optionsObject.data = this.benchmarkService.findOneMetricBenchmarks(keyMetric as keyof Benchmark, mainProject);
     }
+
+    return optionsObject as AgChartOptions;
   }
 
+  /**
+   * Formatea el string de la métrica obtenida de la ruta para que pueda  ser usada como clave en
+   * el array de benchmarks
+  */
   private keyableMetric(metric: string): string {
     switch  (metric) {
       case 'time-repair':
@@ -199,14 +89,46 @@ export class ChartService {
     }
   }
 
-  // private mergeBenchmarks(mainBenchmarks: Object[], sideBenchmarks: Object[]){
-  //   return mainBenchmarks.map(item => {
-  //     const match = sideBenchmarks.find(bItem => bItem.period === item.period);
-  //     return {
-  //         period: item.period,
-  //         releaseFrequency: item.releaseFrequency,
-  //         sideReleaseFrequency: match ? match.releaseFrequency : null
-  //     };
-  // });
-  // }
+  /**
+   * Crea una configuración de gráfico por defecto
+   * @returns Una configuración de gráficos sin datos cargados y con un eje y serie por defecto
+   */
+  private createBlankChartOptions() : Chart {
+    return {
+      axes: [
+        {
+          // Ajustes del eje inferior (fechas de evaluaciones)
+          type: 'category',
+          position: 'bottom',
+          label: {
+            color: 'white', 
+          }
+        },
+        {
+          // Ajustes del eje izquierdo (proyecto principal)
+          type: 'number',
+          position: 'left',
+          keys: ['mainMetric'],
+          label: {
+            color: 'white',
+          },
+        },       
+      ],
+      series: [
+        // Primera serie por defecto, la del proyecto principal
+        { xKey: 'period', yKey: 'mainMetric', type: 'bar', fill: '#00cc36'}
+      ],
+      background: {
+        fill: '#121212', // Color de fondo del gráfico
+      },
+      // Donde se cargarán los valores tanto del proyecto principal como del secundario, si lo hubiere  
+      data: [],
+      legend: {
+        item: {
+            toggleSeriesVisible: false,
+        }
+      }
+    } as Chart;
+  }
+
 }

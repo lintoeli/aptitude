@@ -7,7 +7,8 @@ import { sampleData } from './benchmark.data';
 })
 export class BenchmarkService {
 
-  benchmarks = sampleData; // Cargamos los benchmarks de prueba
+  // Cargamos los benchmarks de prueba
+  benchmarks = sampleData; 
 
   constructor() { }
 
@@ -16,7 +17,7 @@ export class BenchmarkService {
    * @param projectName, nombre del proyecto del que se quieren obtener los benchmarks
    * @returns Benchmark[], lista con todos los benchmarks del proyecto indicado por el parametro
    */
-  getProjectBenchmark(projectName: string): Benchmark[] {
+  public getProjectBenchmark(projectName: string): Benchmark[] {
     return this.benchmarks.filter((benchmark)=> benchmark.project == projectName);
   }
 
@@ -25,7 +26,7 @@ export class BenchmarkService {
    * @param projectName, nombre del proyecto del que se quieren obtener el benchmark
    * @returns Benchmark, último benchmark del proyecto
    */
-  getLastProjectBenchmark(projectName: string): Benchmark{
+  public getLastProjectBenchmark(projectName: string): Benchmark{
     let projectBenchmarks = this.getProjectBenchmark(projectName);
     return projectBenchmarks[projectBenchmarks.length -1];
   }
@@ -46,7 +47,17 @@ export class BenchmarkService {
         .map(item => ({period: item.period, mainMetric: item[metric]} as Object));
   }
 
-  findOneMetricBenchmarksForTwoProjects(metric: keyof Benchmark, mainProject: string, sideProject: string): Object[] {
+  /**
+   * Obtiene las últimas evaluaciones de un proyecto principal y un proyecto secundario para una métrica en concreto,
+   * con el objetivo de comparar ambas
+   * @param metric, métrica a obtener 
+   * @param mainProject, nombre del proyecto principal del cual se quiere saber el valor de la métrica indicada
+   * @param sideProject, nombre del proyecto secundario del cual se quiere saber el valor de la métrica indicada y se
+   *                     quiere comparar con el proyecto principal 
+   * @returns Object[], devuelve un array de objetos donde cada uno contiene el periodo donde se calculó
+   *          el rendimiento en la métrica indicada y su respectivo valor para cada proyecto
+   */
+  public findOneMetricBenchmarksForTwoProjects(metric: keyof Benchmark, mainProject: string, sideProject: string): Object[] {
     if (metric === 'project' || metric === 'period') {
         throw new Error('The metric must be a numeric property of Benchmark.');
     }
@@ -59,7 +70,7 @@ export class BenchmarkService {
         return {
             period: item.period,
             mainMetric: item[metric],
-            sideMetric: sideItem ? sideItem[metric] : null  // Assumes 'null' if no matching period is found
+            sideMetric: sideItem ? sideItem[metric] : null  // Se pone a null si no coinciden los periodos
         };
     });
 }

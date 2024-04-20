@@ -19,7 +19,9 @@ import { ChartService } from 'src/app/services/chart/chart.service';
 })
 export class ChartComponent implements OnInit, OnDestroy{
 
-  @Input() useTwoSeries: boolean = false;
+  @Input() metric: string = "";
+  @Input() mainProject: string = "";
+  @Input() sideProject: string = "undefined";
   public chartOptions!: AgChartOptions;
   private subscription: Subscription = new Subscription();
 
@@ -27,34 +29,35 @@ export class ChartComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     // Inicializamos el gráfico con las opciones correctas
-    //this.loadChartOptions(this.useTwoSeries);
     this.subscription.add(
       this.chartService.sideProject$.subscribe(project => {
         if (project) {
-          // Aquí ajustas las opciones del gráfico basadas en el proyecto seleccionado
-          this.loadChartOptions(true);
+          this.loadChartOptions(this.metric, this.mainProject, project.name);
         } else {
-          // Opcionalmente, maneja el caso de "null" si quieres resetear el gráfico o establecer opciones predeterminadas
-          this.loadChartOptions(false);
+          this.loadChartOptions(this.metric, this.mainProject);
         }
       })
     );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Reaccionamos solo a los cambios en 'useTwoSeries'
-    if (changes['useTwoSeries']) {
-      this.loadChartOptions(changes['useTwoSeries'].currentValue);
+    // Reaccionamos solo a los cambios en 'sideProject'
+    if (changes['sideProject']) {
+      this.loadChartOptions(this.metric, this. mainProject, changes['sideProject'].currentValue);
+    } else {
+      this.loadChartOptions(this.metric, this. mainProject)
     }
   }
 
-  private loadChartOptions(useTwoSeries: boolean): void {
-    // Cambiamos las opciones del gráfico basadas en 'useTwoSeries'
-    this.chartOptions = useTwoSeries 
-      ? this.chartService.dafaultChartOptionsWithTwoSeries
-      : this.chartService.dafaultSimpleChartOptions;
-      
+  private loadChartOptions(metric: string, mainProject: string, sideProject?: string): void {
+    // Cambiamos las opciones del gráfico basadas en la existencia de un sideProject o no
+    if (sideProject) {
+      this.chartOptions =  this.chartService.buildChart(metric, mainProject, sideProject);
+    } else {
+      this.chartOptions = this.chartService.buildChart(metric, mainProject);
+    }
   }
+  
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

@@ -2,7 +2,7 @@ export interface Axe {
     label: Object; // Valor por defecto: {color: 'white';}
     position: string;
     type: string;
-    keys: string[];
+    keys?: string[];
 }
 
 export interface Background {
@@ -16,8 +16,12 @@ export interface Serie {
     yKey: string;
 }
 
-export interface ComplexData {
+export interface Legend {
+    item: Item;
+}
 
+export interface Item {
+    toggleSeriesVisible: boolean;
 }
 
 export interface Chart {
@@ -25,4 +29,5 @@ export interface Chart {
     series: Serie[];
     background?: Background;
     data: Object[];
+    legend?: Legend;
 }
