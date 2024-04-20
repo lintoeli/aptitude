@@ -2,31 +2,39 @@
   <!-- Contenedor Flex para las tarjetas -->
   <div class="cards-container">
     <!-- Bucle para generar las tarjetas -->
-    <ion-card *ngFor="let project of projects | searchFilter:searchText" button="true" (click)="navigateTo('/release-freq/' + project.name)" style="border-radius: 15px;">
+    <ion-card *ngFor="let cardMetricsColor of cardMetricsColors | searchFilter:searchText" button="true" (click)="navigateTo('/release-freq/' + findProject(cardMetricsColor.project).name)" style="border-radius: 15px;">
       <ion-card-header>
-        <ion-card-title>{{ project.title }}</ion-card-title>
+        <ion-card-title>{{ findProject(cardMetricsColor.project).title }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-grid>
           <ion-row>
             <ion-col class="custom-ionic-col">
-              <ion-icon aria-hidden="true" name="stopwatch-outline" size="large"></ion-icon>
+              <ion-icon aria-hidden="true" name="stopwatch-outline" size="large" [ngStyle]="{'color': cardMetricsColor.releaseFreqCode}"></ion-icon>
             </ion-col>
             <ion-col class="custom-ionic-col">
-              <ion-icon aria-hidden="true" name="hourglass-outline" size="large"></ion-icon>
+              <ion-icon aria-hidden="true" name="hourglass-outline" size="large" [ngStyle]="{'color': cardMetricsColor.leadTimeCode}"></ion-icon>
             </ion-col>
             <ion-col class="custom-ionic-col">
-              <ion-icon aria-hidden="true" name="hammer-outline" size="large"></ion-icon>
+              <ion-icon aria-hidden="true" name="hammer-outline" size="large" [ngStyle]="{'color': cardMetricsColor.timeToRepairCode}"></ion-icon>
             </ion-col>
             <ion-col class="custom-ionic-col">
-              <ion-icon aria-hidden="true" name="bug-outline" size="large"></ion-icon>
+              <ion-icon aria-hidden="true" name="bug-outline" size="large" [ngStyle]="{'color': cardMetricsColor.bugIssuesRateCode}"></ion-icon>
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col class="custom-ionic-col">{{ project.releaseFrequency }}</ion-col>
-            <ion-col class="custom-ionic-col">{{ project.leadTime }}</ion-col>
-            <ion-col class="custom-ionic-col">{{ project.timeToRepair }}</ion-col>
-            <ion-col class="custom-ionic-col">{{ project.bugIssuesRate }}</ion-col>
+            <ion-col class="custom-ionic-col" [ngStyle]="{'color': cardMetricsColor.releaseFreqCode}">
+              {{ findProject(cardMetricsColor.project).releaseFrequency }}
+            </ion-col>
+            <ion-col class="custom-ionic-col" [ngStyle]="{'color': cardMetricsColor.leadTimeCode}">
+              {{ findProject(cardMetricsColor.project).leadTime }}
+            </ion-col>
+            <ion-col class="custom-ionic-col" [ngStyle]="{'color': cardMetricsColor.timeToRepairCode}">
+              {{ findProject(cardMetricsColor.project).timeToRepair }}
+            </ion-col>
+            <ion-col class="custom-ionic-col" [ngStyle]="{'color': cardMetricsColor.bugIssuesRateCode}">
+              {{ findProject(cardMetricsColor.project).bugIssuesRate }}
+            </ion-col>
           </ion-row>
         </ion-grid>
       </ion-card-content>
