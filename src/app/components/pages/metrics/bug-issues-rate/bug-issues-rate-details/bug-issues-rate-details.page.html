@@ -4,11 +4,10 @@
   <ion-grid>
     <ion-row>
       <ion-col justify-content-center> <!-- grafica -->
-        <app-chart [useTwoSeries]="doubleChart"></app-chart>
-        <button (click)="switchChart()">Toggle Series</button>
+        <app-chart [metric] = "metric" [mainProject] = "project" [sideProject]="sideProject?.name"></app-chart>
 
         <select name="Side project" (change)="changeSideProject($event)">
-          <option [value] = "undefined">Selecciona un proyecto para comparar</option>
+          <option [value] = "undefined">Select a project for direct comparison</option>
           <option [value] = "sideProject.name" *ngFor="let sideProject of allProjects" [selected]="sideProject.title === dropdownName">{{sideProject.title}}</option>
         </select>
       </ion-col>

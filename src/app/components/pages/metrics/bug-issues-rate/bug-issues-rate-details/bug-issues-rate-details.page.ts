@@ -12,12 +12,21 @@ import { ProjectService } from 'src/app/services/project/project.service';
 })
 export class BugIssuesRateDetailsPage implements OnInit {
 
-  public project?: String;
+  // Metrica a representar
+  public metric!: string;
 
+  // Proyecto a cargar
+  public project!: string;
+
+  // Lista de todos los proyectos
   public allProjects!: Project[];
+
+  // Proyecto para comparar
   public sideProject?: Project;
+
   public doubleChart!: boolean;
   private subscription: Subscription = new Subscription();
+
   dropdownName?: string;
 
   constructor(private route: ActivatedRoute,  
@@ -26,6 +35,8 @@ export class BugIssuesRateDetailsPage implements OnInit {
               private projetService: ProjectService) {}
 
   ngOnInit() {
+    // Obtenemos de la ruta la métrica que hay que mostrar
+    this.metric = this.router.url.split('/')[1];
     
     // Obtenemos de la ruta el nombre del proyecto
     this.project = this.route.snapshot.params['project'];
@@ -35,6 +46,7 @@ export class BugIssuesRateDetailsPage implements OnInit {
     
     // Aquí nos suscribimos al estado de doubleChart
     this.subscription.add(this.chartService.doubleChart$.subscribe(doubleChart => {
+      this.chartService.buildChart(this.metric, this.project)
       this.doubleChart = doubleChart;
     }));
 
@@ -48,6 +60,7 @@ export class BugIssuesRateDetailsPage implements OnInit {
       }
     }));
 
+
   }
 
   ngOnDestroy() {
@@ -55,16 +68,9 @@ export class BugIssuesRateDetailsPage implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  switchChart() {
-    // Llamada al servicio para cambiar el estado de la flag de doble grafico
-    this.chartService.toggleDoubleChart();
-  }
-
   changeSideProject(event: any){
     this.sideProject = this.projetService.findOneProjectByName(event.target.value);
     this.chartService.setSideProject(this.sideProject);
   }
-
-
 
 }
