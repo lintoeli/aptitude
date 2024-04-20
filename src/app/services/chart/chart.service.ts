@@ -3,9 +3,9 @@ import { BehaviorSubject, range } from 'rxjs';
 import { AgChartOptions } from 'ag-charts-community';
 import { Project } from 'src/app/models/project.model';
 import { BenchmarkService } from '../benchmark/benchmark.service';
-import { ProjectService } from '../project/project.service';
 import { Benchmark } from 'src/app/models/benchmark.model';
 import { Chart } from 'src/app/models/chart.interface';
+import { ColorDefinerService } from '../color-definer/color-definer.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class ChartService {
   private sideProjectSource = new BehaviorSubject<Project | undefined>(undefined);
   sideProject$ = this.sideProjectSource.asObservable();
 
-  constructor(private benchmarkService: BenchmarkService) {}
+  constructor(private benchmarkService: BenchmarkService, private colorDefiner: ColorDefinerService) {}
 
   /**
    * Cambia el proyecto secundario
@@ -55,13 +55,20 @@ export class ChartService {
       // Cargamos los benchmarks de ambos proyectos en la configuración
       optionsObject.data = this.benchmarkService.findOneMetricBenchmarksForTwoProjects(keyMetric as keyof Benchmark, mainProject, sideProject);
 
+      //Obtenemos los colores de la barra de cada proyecto y actualizamos la serie por defecto
+      const barColors = this.colorDefiner.getBarColorCode(keyMetric, mainProject, sideProject);
+      optionsObject.series[0].fill =  barColors.mainProjectColorCode as string;
+
       // Creamos la segunda serie de barras para representar el proyecto secundario
-      optionsObject.series.push({ xKey: 'period', yKey: 'sideMetric', type: 'bar', fill: '#fccf03'});
+      optionsObject.series.push({ xKey: 'period', yKey: 'sideMetric', type: 'bar', fill: barColors.sideProjectColorCode as string});
 
       // Agregamos el eje del proyecto secundario para que sea visible en el gráfico
       optionsObject.axes.push({type: 'number', position: 'right', keys: ['sideMetric'], label: {color: '#121212'}});
 
     } else {
+      //Obtenemos los colores de la barra y actualizamos la serie por defecto
+      const barColors = this.colorDefiner.getBarColorCode(keyMetric, mainProject);
+      optionsObject.series[0].fill =  barColors.mainProjectColorCode as string;
       // Cargamos los benchmarks del proyecto principal
       optionsObject.data = this.benchmarkService.findOneMetricBenchmarks(keyMetric as keyof Benchmark, mainProject);
     }

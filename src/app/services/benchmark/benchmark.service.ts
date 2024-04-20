@@ -70,7 +70,7 @@ export class BenchmarkService {
         return {
             period: item.period,
             mainMetric: item[metric],
-            sideMetric: sideItem ? sideItem[metric] : null  // Se pone a null si no coinciden los periodos
+            sideMetric: sideItem ? sideItem[metric] : 0  // Se pone a 0 si no coinciden los periodos
         };
     });
 }
