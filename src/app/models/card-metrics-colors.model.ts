@@ -1,5 +1,6 @@
 export interface CardMetricsColors {
-    project: string;
+    projectName: string;
+    projectTitle: string;
     releaseFreqCode: string;
     leadTimeCode: string;
     bugIssuesRateCode: string;

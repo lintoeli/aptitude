@@ -27,3 +27,27 @@
   .custom-ionic-col{
     text-align: center;
   }
+
+  .custom-tooltip {
+    position: absolute;
+    background-color: #1e1e1e00;
+    padding: 5px 10px;
+    border-radius: 6px;
+    top: 140%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 90%;
+    font-weight: bold;
+  }
+  
+  .custom-ionic-col:hover .custom-tooltip {
+    opacity: 1;
+  }
+
+  .boldValues {
+    font-weight: bold;
+  }

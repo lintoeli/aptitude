@@ -15,6 +15,8 @@ export class ProjectCardListComponent  implements OnInit {
   @Input() projects: Project[] = [];
   @Input() searchText?: string
 
+  showTooltip = false;
+
   cardMetricsColors: CardMetricsColors[] = [];
   constructor(private router: Router, 
               private colorDefiner: ColorDefinerService, 

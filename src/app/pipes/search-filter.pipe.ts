@@ -11,7 +11,7 @@ export class SearchFilterPipe implements PipeTransform {
     } else {
       
       return array.filter(project =>{
-        return project.title.toLowerCase().includes(text.toLowerCase());
+        return project.projectTitle.toLowerCase().includes(text.toLowerCase());
       });
 
     }

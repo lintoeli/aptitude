@@ -26,7 +26,10 @@ export class ColorDefinerService {
 
   constructor(private projectService: ProjectService) { }
 
-  public defineColorRanges() {
+  /**
+   * Establece los rangos de valores que pertenecen a cada color para cada métrica
+   */
+  public defineColorRanges(): void {
     this.colorRanges = [];
     const projects = this.projectService.getAllProjects();
 
@@ -49,14 +52,23 @@ export class ColorDefinerService {
     });
   }
 
+  /**
+   * Obtiene el color con el que representar la barra del gráfico para una métrica y uno o dos proyectos
+   * @param metric, métrica a representar 
+   * @param mainProjectName, nombre del proyecto principal a representar 
+   * @param sideProjectName, opcional, nombre del proyecto secundario a representar 
+   * @returns Object, con los códigos de color en hexadecimal para el proyecto principal o para ambos proyectos
+   */
   public getBarColorCode(metric: string, mainProjectName: string, sideProjectName?: string){
     this.defineColorRanges();
+    // Obtenemos los rangos de colores de la métrica especificada
     const range = this.colorRanges.filter((item) => item.metric === metric)[0];
 
     const mainProject = this.projectService.findOneProjectByName(mainProjectName);
     const mainProjectMetricValue = mainProject[metric as keyof Project] as number;
     const mainProjectColorCode = this.checkValueInterval(range, mainProjectMetricValue);
 
+    // Comprobamos si hay que definir el color del proyecto secundario
     if (sideProjectName){
       const sideProject = this.projectService.findOneProjectByName(sideProjectName);
       const sideProjectMetricValue = sideProject[metric as keyof Project] as number;
@@ -71,7 +83,13 @@ export class ColorDefinerService {
     }
   }
 
+  /**
+   * Obtiene los colores que se mostrarán en los iconos de las métricas en las tarjetas del inicio
+   * @param project, objeto Project del cual se obtendrán sus colores 
+   * @returns Object con el nombre, el título y los códigos de color de cada métrica del proyecto
+   */
   public getMetricsCardColor(project: Project){
+    this.defineColorRanges();
     // Obtenemos los colorRange de cada métrica y su código de color
     const releaseFreqRange = this.colorRanges.find( item => item.metric == "releaseFrequency");
     const releaseFreqCode = this.checkValueInterval(releaseFreqRange as ColorRange,  project.releaseFrequency as number);
@@ -85,11 +103,19 @@ export class ColorDefinerService {
     const bugIssuesRateRange = this.colorRanges.find( item => item.metric == "bugIssuesRate");
     const bugIssuesRateCode = this.checkValueInterval(bugIssuesRateRange as ColorRange,  project.bugIssuesRate as number);
 
-    return { project: project.name, releaseFreqCode: releaseFreqCode, timeToRepairCode: timeToRepairCode, 
+    return { projectName: project.name, projectTitle: project.title, releaseFreqCode: releaseFreqCode, timeToRepairCode: timeToRepairCode, 
              bugIssuesRateCode: bugIssuesRateCode, leadTimeCode: leadTimeCode} as CardMetricsColors
     
   }
 
+  /**
+   * Obtiene el código de color de un valor de una métrica en función de a qué rango pertenece
+   * @param range, tipo ColorRange, rangos de color para una métrica en concreto
+   * @param projectMetricValue, number, valor de la métrica del proyecto que se quiere comprobar 
+   * @param isSideProject, opcional, booleano, indica si se deben tomar los tonos oscuros, ya que se trata de un
+   *                       proyecto secundario
+   * @returns string, código de color correspondiente al valor indicado
+   */
   private checkValueInterval(range: ColorRange, projectMetricValue: number, isSideProject:  boolean = false): string{
     if (projectMetricValue >= range.green.start) {
       return isSideProject ? '#076e03' : '#07de00'; // sideGreen, mainGreen
