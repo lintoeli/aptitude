@@ -29,10 +29,12 @@ export class TimeRepairDetailsPage implements OnInit {
 
   dropdownName?: string;
 
+  public showOptions: boolean = false;
+
   constructor(private route: ActivatedRoute,  
               private router: Router,
               private chartService: ChartService,
-              private projetService: ProjectService) {}
+              private projectService: ProjectService) {}
 
   ngOnInit() {
     // Obtenemos de la ruta la métrica que hay que mostrar
@@ -40,13 +42,13 @@ export class TimeRepairDetailsPage implements OnInit {
     
     // Obtenemos de la ruta el nombre del proyecto
     this.project = this.route.snapshot.params['project'];
-  
+
     // Obtenemos la lista de proyectos
-    this.allProjects = this.projetService.getAllProjects();
+    this.allProjects = this.projectService.getAllProjects();
     
     // Aquí nos suscribimos al estado de doubleChart
     this.subscription.add(this.chartService.doubleChart$.subscribe(doubleChart => {
-      //this.chartService.buildChart(this.metric, this.project)
+      this.chartService.buildChart(this.metric, this.project)
       this.doubleChart = doubleChart;
     }));
 
@@ -54,21 +56,29 @@ export class TimeRepairDetailsPage implements OnInit {
     this.subscription.add(this.chartService.sideProject$.subscribe(project => {
       this.sideProject = project;
       if(project){
+        console.log(project);
         this.dropdownName = project.title;
       } else {
         this.dropdownName = "Selecciona un proyecto para comparar";
       }
     }));
 
+
+  }
+
+  changeSideProject(event: any){
+    this.sideProject = this.projectService.findOneProjectByName(event.target.value);
+    this.chartService.setSideProject(this.sideProject);
+  }
+
+  resetSelection(){
+    this.sideProject = undefined;
+    this.chartService.setSideProject(undefined);
   }
 
   ngOnDestroy() {
     // Desuscribimos para optimizar memoria
     this.subscription.unsubscribe();
   }
-
-  changeSideProject(event: any){
-    this.sideProject = this.projetService.findOneProjectByName(event.target.value);
-    this.chartService.setSideProject(this.sideProject);
-  }
+  
 }
