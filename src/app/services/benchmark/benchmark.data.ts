@@ -5,7 +5,7 @@ export const sampleData = [
         leadTime: 5.23,
         timeToRepair: 1.89,
         bugIssuesRate: 7.04,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'angular',
@@ -13,7 +13,7 @@ export const sampleData = [
         leadTime: 2.56,
         timeToRepair: 6.79,
         bugIssuesRate: 3.12,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'angular',
@@ -21,7 +21,7 @@ export const sampleData = [
         leadTime: 4.37,
         timeToRepair: 0.45,
         bugIssuesRate: 8.93,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'angular',
@@ -29,7 +29,7 @@ export const sampleData = [
         leadTime: 8.17,
         timeToRepair: 9.01,
         bugIssuesRate: 1.50,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'angular',
@@ -37,7 +37,7 @@ export const sampleData = [
         leadTime: 0.98,
         timeToRepair: 3.76,
         bugIssuesRate: 5.65,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'angular',
@@ -45,7 +45,7 @@ export const sampleData = [
         leadTime: 9.29,
         timeToRepair: 7.34,
         bugIssuesRate: 2.08,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'django',
@@ -53,7 +53,7 @@ export const sampleData = [
         leadTime: 4.12,
         timeToRepair: 2.45,
         bugIssuesRate: 7.77,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'django',
@@ -61,7 +61,7 @@ export const sampleData = [
         leadTime: 0.36,
         timeToRepair: 9.85,
         bugIssuesRate: 4.92,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'django',
@@ -69,7 +69,7 @@ export const sampleData = [
         leadTime: 5.68,
         timeToRepair: 4.75,
         bugIssuesRate: 8.06,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'django',
@@ -77,7 +77,7 @@ export const sampleData = [
         leadTime: 8.00,
         timeToRepair: 1.64,
         bugIssuesRate: 3.20,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'django',
@@ -85,7 +85,7 @@ export const sampleData = [
         leadTime: 3.41,
         timeToRepair: 6.78,
         bugIssuesRate: 2.89,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'django',
@@ -93,7 +93,7 @@ export const sampleData = [
         leadTime: 9.98,
         timeToRepair: 0.52,
         bugIssuesRate: 5.14,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'electron',
@@ -101,7 +101,7 @@ export const sampleData = [
         leadTime: 9.46,
         timeToRepair: 5.23,
         bugIssuesRate: 6.34,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'electron',
@@ -109,7 +109,7 @@ export const sampleData = [
         leadTime: 3.55,
         timeToRepair: 8.66,
         bugIssuesRate: 0.98,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'electron',
@@ -117,7 +117,7 @@ export const sampleData = [
         leadTime: 7.31,
         timeToRepair: 2.03,
         bugIssuesRate: 9.11,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'electron',
@@ -125,7 +125,7 @@ export const sampleData = [
         leadTime: 0.85,
         timeToRepair: 7.92,
         bugIssuesRate: 4.56,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'electron',
@@ -133,7 +133,7 @@ export const sampleData = [
         leadTime: 8.21,
         timeToRepair: 4.14,
         bugIssuesRate: 3.29,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'electron',
@@ -141,7 +141,7 @@ export const sampleData = [
         leadTime: 1.50,
         timeToRepair: 6.78,
         bugIssuesRate: 5.87,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'express',
@@ -149,7 +149,7 @@ export const sampleData = [
         leadTime: 8.23,
         timeToRepair: 9.46,
         bugIssuesRate: 3.81,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'express',
@@ -157,7 +157,7 @@ export const sampleData = [
         leadTime: 7.39,
         timeToRepair: 1.04,
         bugIssuesRate: 6.28,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'express',
@@ -165,7 +165,7 @@ export const sampleData = [
         leadTime: 4.73,
         timeToRepair: 3.66,
         bugIssuesRate: 7.90,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'express',
@@ -173,7 +173,7 @@ export const sampleData = [
         leadTime: 2.57,
         timeToRepair: 0.77,
         bugIssuesRate: 8.34,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'express',
@@ -181,7 +181,7 @@ export const sampleData = [
         leadTime: 1.12,
         timeToRepair: 4.33,
         bugIssuesRate: 0.92,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'express',
@@ -189,7 +189,7 @@ export const sampleData = [
         leadTime: 3.88,
         timeToRepair: 5.20,
         bugIssuesRate: 2.75,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'flask',
@@ -197,7 +197,7 @@ export const sampleData = [
         leadTime: 2.01,
         timeToRepair: 5.67,
         bugIssuesRate: 4.39,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'flask',
@@ -205,7 +205,7 @@ export const sampleData = [
         leadTime: 6.75,
         timeToRepair: 1.29,
         bugIssuesRate: 5.86,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'flask',
@@ -213,7 +213,7 @@ export const sampleData = [
         leadTime: 0.47,
         timeToRepair: 9.52,
         bugIssuesRate: 2.08,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'flask',
@@ -221,7 +221,7 @@ export const sampleData = [
         leadTime: 4.68,
         timeToRepair: 7.94,
         bugIssuesRate: 8.77,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'flask',
@@ -229,7 +229,7 @@ export const sampleData = [
         leadTime: 8.92,
         timeToRepair: 6.14,
         bugIssuesRate: 3.41,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'flask',
@@ -237,7 +237,7 @@ export const sampleData = [
         leadTime: 2.35,
         timeToRepair: 4.23,
         bugIssuesRate: 0.97,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'golang',
@@ -245,7 +245,7 @@ export const sampleData = [
         leadTime: 8.19,
         timeToRepair: 3.56,
         bugIssuesRate: 7.12,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'golang',
@@ -253,7 +253,7 @@ export const sampleData = [
         leadTime: 1.77,
         timeToRepair: 9.23,
         bugIssuesRate: 2.51,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'golang',
@@ -261,7 +261,7 @@ export const sampleData = [
         leadTime: 5.90,
         timeToRepair: 0.84,
         bugIssuesRate: 9.38,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'golang',
@@ -269,7 +269,7 @@ export const sampleData = [
         leadTime: 3.68,
         timeToRepair: 2.76,
         bugIssuesRate: 1.22,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'golang',
@@ -277,7 +277,7 @@ export const sampleData = [
         leadTime: 9.93,
         timeToRepair: 6.00,
         bugIssuesRate: 4.14,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'golang',
@@ -285,7 +285,7 @@ export const sampleData = [
         leadTime: 7.07,
         timeToRepair: 8.29,
         bugIssuesRate: 5.61,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'laravel',
@@ -293,7 +293,7 @@ export const sampleData = [
         leadTime: 3.17,
         timeToRepair: 6.21,
         bugIssuesRate: 7.39,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'laravel',
@@ -301,7 +301,7 @@ export const sampleData = [
         leadTime: 1.09,
         timeToRepair: 2.35,
         bugIssuesRate: 9.51,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'laravel',
@@ -309,7 +309,7 @@ export const sampleData = [
         leadTime: 6.83,
         timeToRepair: 8.97,
         bugIssuesRate: 0.86,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'laravel',
@@ -317,7 +317,7 @@ export const sampleData = [
         leadTime: 9.42,
         timeToRepair: 3.69,
         bugIssuesRate: 2.44,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'laravel',
@@ -325,7 +325,7 @@ export const sampleData = [
         leadTime: 7.98,
         timeToRepair: 5.13,
         bugIssuesRate: 3.27,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'laravel',
@@ -333,7 +333,7 @@ export const sampleData = [
         leadTime: 4.70,
         timeToRepair: 7.89,
         bugIssuesRate: 6.10,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'kotlin',
@@ -341,7 +341,7 @@ export const sampleData = [
         leadTime: 2.12,
         timeToRepair: 9.04,
         bugIssuesRate: 5.23,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'kotlin',
@@ -349,7 +349,7 @@ export const sampleData = [
         leadTime: 7.36,
         timeToRepair: 4.89,
         bugIssuesRate: 8.77,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'kotlin',
@@ -357,7 +357,7 @@ export const sampleData = [
         leadTime: 3.28,
         timeToRepair: 1.17,
         bugIssuesRate: 6.45,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'kotlin',
@@ -365,7 +365,7 @@ export const sampleData = [
         leadTime: 8.70,
         timeToRepair: 7.05,
         bugIssuesRate: 4.33,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'kotlin',
@@ -373,7 +373,7 @@ export const sampleData = [
         leadTime: 1.25,
         timeToRepair: 2.68,
         bugIssuesRate: 9.84,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'kotlin',
@@ -381,7 +381,7 @@ export const sampleData = [
         leadTime: 5.71,
         timeToRepair: 8.76,
         bugIssuesRate: 3.22,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'nodejs',
@@ -389,7 +389,7 @@ export const sampleData = [
         leadTime: 8.34,
         timeToRepair: 3.07,
         bugIssuesRate: 1.65,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'nodejs',
@@ -397,7 +397,7 @@ export const sampleData = [
         leadTime: 6.29,
         timeToRepair: 7.91,
         bugIssuesRate: 2.03,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'nodejs',
@@ -405,7 +405,7 @@ export const sampleData = [
         leadTime: 9.68,
         timeToRepair: 5.22,
         bugIssuesRate: 8.57,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'nodejs',
@@ -413,7 +413,7 @@ export const sampleData = [
         leadTime: 4.97,
         timeToRepair: 6.83,
         bugIssuesRate: 7.29,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'nodejs',
@@ -421,7 +421,7 @@ export const sampleData = [
         leadTime: 2.41,
         timeToRepair: 1.38,
         bugIssuesRate: 4.95,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'nodejs',
@@ -429,7 +429,7 @@ export const sampleData = [
         leadTime: 3.53,
         timeToRepair: 9.99,
         bugIssuesRate: 6.78,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'react',
@@ -437,7 +437,7 @@ export const sampleData = [
         leadTime: 5.14,
         timeToRepair: 6.88,
         bugIssuesRate: 1.97,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'react',
@@ -445,7 +445,7 @@ export const sampleData = [
         leadTime: 7.39,
         timeToRepair: 2.83,
         bugIssuesRate: 8.66,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'react',
@@ -453,7 +453,7 @@ export const sampleData = [
         leadTime: 8.22,
         timeToRepair: 9.15,
         bugIssuesRate: 3.51,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'react',
@@ -461,7 +461,7 @@ export const sampleData = [
         leadTime: 2.41,
         timeToRepair: 7.94,
         bugIssuesRate: 0.58,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'react',
@@ -469,7 +469,7 @@ export const sampleData = [
         leadTime: 1.85,
         timeToRepair: 4.76,
         bugIssuesRate: 9.33,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'react',
@@ -477,7 +477,7 @@ export const sampleData = [
         leadTime: 9.78,
         timeToRepair: 5.42,
         bugIssuesRate: 4.09,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'rubyonrails',
@@ -485,7 +485,7 @@ export const sampleData = [
         leadTime: 3.96,
         timeToRepair: 8.22,
         bugIssuesRate: 6.14,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'rubyonrails',
@@ -493,7 +493,7 @@ export const sampleData = [
         leadTime: 4.68,
         timeToRepair: 5.77,
         bugIssuesRate: 7.99,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'rubyonrails',
@@ -501,7 +501,7 @@ export const sampleData = [
         leadTime: 2.37,
         timeToRepair: 0.96,
         bugIssuesRate: 3.28,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'rubyonrails',
@@ -509,7 +509,7 @@ export const sampleData = [
         leadTime: 6.83,
         timeToRepair: 1.04,
         bugIssuesRate: 8.21,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'rubyonrails',
@@ -517,7 +517,7 @@ export const sampleData = [
         leadTime: 7.59,
         timeToRepair: 3.46,
         bugIssuesRate: 2.74,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'rubyonrails',
@@ -525,7 +525,7 @@ export const sampleData = [
         leadTime: 5.22,
         timeToRepair: 9.38,
         bugIssuesRate: 1.85,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'springboot',
@@ -533,7 +533,7 @@ export const sampleData = [
         leadTime: 1.10,
         timeToRepair: 3.84,
         bugIssuesRate: 7.15,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'springboot',
@@ -541,7 +541,7 @@ export const sampleData = [
         leadTime: 6.19,
         timeToRepair: 7.61,
         bugIssuesRate: 4.27,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'springboot',
@@ -549,7 +549,7 @@ export const sampleData = [
         leadTime: 9.99,
         timeToRepair: 2.56,
         bugIssuesRate: 5.63,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'springboot',
@@ -557,7 +557,7 @@ export const sampleData = [
         leadTime: 3.45,
         timeToRepair: 6.20,
         bugIssuesRate: 9.42,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'springboot',
@@ -565,7 +565,7 @@ export const sampleData = [
         leadTime: 8.03,
         timeToRepair: 4.59,
         bugIssuesRate: 2.10,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'springboot',
@@ -573,7 +573,7 @@ export const sampleData = [
         leadTime: 2.54,
         timeToRepair: 8.67,
         bugIssuesRate: 6.90,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'swiftui',
@@ -581,7 +581,7 @@ export const sampleData = [
         leadTime: 6.55,
         timeToRepair: 7.33,
         bugIssuesRate: 4.29,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'swiftui',
@@ -589,7 +589,7 @@ export const sampleData = [
         leadTime: 1.75,
         timeToRepair: 9.21,
         bugIssuesRate: 0.86,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'swiftui',
@@ -597,7 +597,7 @@ export const sampleData = [
         leadTime: 9.03,
         timeToRepair: 3.49,
         bugIssuesRate: 7.04,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'swiftui',
@@ -605,7 +605,7 @@ export const sampleData = [
         leadTime: 8.17,
         timeToRepair: 4.85,
         bugIssuesRate: 5.92,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'swiftui',
@@ -613,7 +613,7 @@ export const sampleData = [
         leadTime: 3.10,
         timeToRepair: 6.78,
         bugIssuesRate: 2.46,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'swiftui',
@@ -621,7 +621,7 @@ export const sampleData = [
         leadTime: 4.82,
         timeToRepair: 1.57,
         bugIssuesRate: 8.71,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'tensorflow',
@@ -629,7 +629,7 @@ export const sampleData = [
         leadTime: 7.98,
         timeToRepair: 8.20,
         bugIssuesRate: 9.67,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'tensorflow',
@@ -637,7 +637,7 @@ export const sampleData = [
         leadTime: 2.46,
         timeToRepair: 5.38,
         bugIssuesRate: 3.21,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'tensorflow',
@@ -645,7 +645,7 @@ export const sampleData = [
         leadTime: 6.31,
         timeToRepair: 7.54,
         bugIssuesRate: 1.45,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'tensorflow',
@@ -653,7 +653,7 @@ export const sampleData = [
         leadTime: 5.10,
         timeToRepair: 2.76,
         bugIssuesRate: 8.32,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'tensorflow',
@@ -661,7 +661,7 @@ export const sampleData = [
         leadTime: 9.22,
         timeToRepair: 0.99,
         bugIssuesRate: 6.54,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'tensorflow',
@@ -669,7 +669,7 @@ export const sampleData = [
         leadTime: 4.69,
         timeToRepair: 3.07,
         bugIssuesRate: 7.93,
-        period: 'S2-2023'
+        period: '2023-S2'
     },
     {
         project: 'vuejs',
@@ -677,7 +677,7 @@ export const sampleData = [
         leadTime: 0.74,
         timeToRepair: 9.00,
         bugIssuesRate: 2.51,
-        period: 'S1-2021'
+        period: '2021-S1'
     },
     {
         project: 'vuejs',
@@ -685,7 +685,7 @@ export const sampleData = [
         leadTime: 5.37,
         timeToRepair: 1.92,
         bugIssuesRate: 8.76,
-        period: 'S2-2021'
+        period: '2021-S2'
     },
     {
         project: 'vuejs',
@@ -693,7 +693,7 @@ export const sampleData = [
         leadTime: 8.92,
         timeToRepair: 6.80,
         bugIssuesRate: 3.60,
-        period: 'S1-2022'
+        period: '2022-S1'
     },
     {
         project: 'vuejs',
@@ -701,7 +701,7 @@ export const sampleData = [
         leadTime: 7.15,
         timeToRepair: 4.37,
         bugIssuesRate: 9.14,
-        period: 'S2-2022'
+        period: '2022-S2'
     },
     {
         project: 'vuejs',
@@ -709,7 +709,7 @@ export const sampleData = [
         leadTime: 3.44,
         timeToRepair: 8.25,
         bugIssuesRate: 5.99,
-        period: 'S1-2023'
+        period: '2023-S1'
     },
     {
         project: 'vuejs',
@@ -717,6 +717,6 @@ export const sampleData = [
         leadTime: 1.21,
         timeToRepair: 7.03,
         bugIssuesRate: 4.58,
-        period: 'S2-2023'
+        period: '2023-S2'
     }
 ];

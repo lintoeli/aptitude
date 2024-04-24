@@ -46,7 +46,7 @@ export class ChartService {
    */
   public buildChart(metric: string, mainProject: string, sideProject? : string) : AgChartOptions {
     // Obtenemos la métrica a representar en el gráfico
-    const keyMetric = this.keyableMetric(metric);
+    const keyMetric = this.benchmarkService.keyableMetric(metric);
 
     // Creamos una nueva configuración "en blanco"
     let optionsObject = this.createBlankChartOptions();
@@ -74,26 +74,6 @@ export class ChartService {
     }
 
     return optionsObject as AgChartOptions;
-  }
-
-  /**
-   * Formatea el string de la métrica obtenida de la ruta para que pueda  ser usada como clave en
-   * el array de benchmarks
-  */
-  private keyableMetric(metric: string): string {
-    switch  (metric) {
-      case 'time-repair':
-        return 'timeToRepair';
-      case 'bug-issues-rate':
-        return 'bugIssuesRate';
-      case 'lead-time':
-        return 'leadTime'
-      case 'release-freq':
-        return 'releaseFrequency';
-
-      default:
-        return metric;
-    }
   }
 
   /**
