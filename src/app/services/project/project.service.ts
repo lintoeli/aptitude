@@ -34,7 +34,8 @@ export class ProjectService {
    */
   public getAllProjects(): Project[]{
     // Se deben actualizar los proyectos
-    this.updateLastBenchmarks(); 
+    this.updateLastBenchmarks();
+    this.projects.sort((a, b) => a.name.localeCompare(b.name));
     return this.projects;
   }
 

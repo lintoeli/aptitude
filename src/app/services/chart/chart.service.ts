@@ -111,6 +111,7 @@ export class ChartService {
       // Donde se cargarán los valores tanto del proyecto principal como del secundario, si lo hubiere  
       data: [],
       legend: {
+        enabled: false,
         item: {
             toggleSeriesVisible: false,
         }

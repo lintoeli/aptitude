@@ -6,10 +6,19 @@
       <ion-col justify-content-center> <!-- grafica -->
         <app-chart [metric] = "metric" [mainProject] = "project" [sideProject]="sideProject?.name"></app-chart>
 
-        <select name="Side project" (change)="changeSideProject($event)">
-          <option [value] = "undefined">Select a project for direct comparison</option>
-          <option [value] = "sideProject.name" *ngFor="let sideProject of allProjects" [selected]="sideProject.title === dropdownName">{{sideProject.title}}</option>
-        </select>
+        <!-- selector de proyecto secundario -->
+
+        <div class="select-container">
+          <select name="Side project" (change)="changeSideProject($event)">
+            <option [value]="undefined">Select a project for direct comparison</option>
+            <option [value]="sideProject.name" *ngFor="let sideProject of allProjects" [selected]="sideProject.title === dropdownName">{{sideProject.title}}</option>
+          </select>
+        
+          <ion-button class="reset-dropdown" *ngIf="sideProject" (click)="resetSelection()" fill="clear">
+            <ion-icon name="close-circle"></ion-icon>
+          </ion-button>
+        </div>
+
       </ion-col>
   
       <ion-col justify-content-center> <!-- dashboard -->
@@ -19,27 +28,5 @@
   </ion-grid>
 </ion-content>
 
+<app-metric-menu [project] = "project"></app-metric-menu>
 
-<!-- <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="tab1" routerLink="/release-freq/{{project}}">
-      <ion-icon aria-hidden="true" name="stopwatch-outline"></ion-icon>
-      <ion-label>Release frequency</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="tab2" routerLink="/lead-time/{{project}}" selected="true">
-      <ion-icon aria-hidden="true" name="hourglass-outline"></ion-icon>
-      <ion-label>Lead time</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="tab3" routerLink="/time-repair/{{project}}">
-      <ion-icon aria-hidden="true" name="hammer-outline"></ion-icon>
-      <ion-label>Time to repair code</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="tab4" routerLink="/bug-issues-rate/{{project}}">
-      <ion-icon aria-hidden="true" name="bug-outline"></ion-icon>
-      <ion-label>Bug issues rate</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar> -->
-
-  <app-metric-menu [project] = "project"></app-metric-menu>
