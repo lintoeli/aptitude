@@ -23,6 +23,7 @@ export class HomePage implements OnInit {
     // Cargamos los proyectos
     this.projects = this.projectService.getAllProjects();
     this.colorDefinerService.defineColorRanges();
+
   }
 
   buscar( event: any ){

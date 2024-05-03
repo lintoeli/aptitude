@@ -1,5 +1,6 @@
 
 export interface Benchmark {
+    id?: number;
     project: string;
     releaseFrequency: number;
     leadTime: number;

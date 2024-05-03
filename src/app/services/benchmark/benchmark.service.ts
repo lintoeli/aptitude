@@ -59,7 +59,7 @@ export class BenchmarkService {
    *          el rendimiento en la métrica indicada y su respectivo valor
    */
   findOneMetricBenchmarks(metric: keyof Benchmark, project: string) :  SimpleBenchmark[] {
-    if (metric === 'project' || metric === 'period') {
+    if (metric === 'project' || metric === 'period' || metric === 'id') {
       throw new Error('The metric must be a numeric property of Benchmark.');
     } 
     return this.benchmarks
@@ -78,7 +78,7 @@ export class BenchmarkService {
    *          el rendimiento en la métrica indicada y su respectivo valor para cada proyecto
    */
   public findOneMetricBenchmarksForTwoProjects(metric: keyof Benchmark, mainProject: string, sideProject: string): SimpleBenchmark[] {
-    if (metric === 'project' || metric === 'period') {
+    if (metric === 'project' || metric === 'period' || metric === 'id') {
         throw new Error('The metric must be a numeric property of Benchmark.');
     }
 
@@ -96,6 +96,10 @@ export class BenchmarkService {
   }
 
   public getPreviousPeriodVariation(metric: keyof Benchmark, project: string) {
+
+    if (metric === 'project' || metric === 'period' || metric === 'id') {
+      throw new Error('The metric must be a numeric property of Benchmark.');
+    } 
     // Obtenemos benchmarks de un proyecto para una métrica
     const benchmarks = this.findOneMetricBenchmarks(metric, project);
     
@@ -108,6 +112,10 @@ export class BenchmarkService {
   }
 
   public getBestBenchmark(metric: keyof Benchmark, project: string) {
+
+    if (metric === 'project' || metric === 'period' || metric === 'id') {
+      throw new Error('The metric must be a numeric property of Benchmark.');
+    } 
     // Obtenemos benchmarks de un proyecto para una métrica
     const benchmarks = this.findOneMetricBenchmarks(metric, project) as SimpleBenchmark[];
 
@@ -123,6 +131,10 @@ export class BenchmarkService {
 
   public getGlobalBestBenchmark(metric: keyof Benchmark){
 
+    if (metric === 'project' || metric === 'period' || metric === 'id') {
+      throw new Error('The metric must be a numeric property of Benchmark.');
+    } 
+
     let currentBenchmarks = this.benchmarks.filter((item) => item.period === "2023-S2");
     const max = currentBenchmarks.reduce((max, item) => max[metric] > item[metric] ? max : item);
     return { period: max.period, value: max[metric], projectName: max.project } as DashboardBenchmark;
@@ -130,6 +142,11 @@ export class BenchmarkService {
 
 
   public getGlobalWorstBenchmark(metric: keyof Benchmark){
+
+    if (metric === 'project' || metric === 'period' || metric === 'id') {
+      throw new Error('The metric must be a numeric property of Benchmark.');
+    } 
+    
     let currentBenchmarks = this.benchmarks.filter((item) => item.period === "2023-S2");
     const min = currentBenchmarks.reduce((min, item) => min[metric] < item[metric] ? min : item);
     return { period: min.period, value: min[metric], projectName: min.project } as DashboardBenchmark;
