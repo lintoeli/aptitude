@@ -1,5 +1,6 @@
 export interface Project {
-    id?: number
+    id?: number;
+    address?: string;
     title: string;
     name: string;
     releaseFrequency?: number;
