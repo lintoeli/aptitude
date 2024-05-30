@@ -1,0 +1,19 @@
+<app-header></app-header>
+
+
+<ion-content>
+  <!-- Barra de busqueda -->
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col size="7">
+        <ion-searchbar animated [debounce]="1000" placeholder="Search for a project" color="light" (ionChange) = "buscar($event)"></ion-searchbar>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Proyectos -->
+  <app-project-card-list [projects]="projects" [searchText]="searchText"></app-project-card-list>
+    
+</ion-content>
