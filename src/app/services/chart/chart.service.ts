@@ -44,35 +44,68 @@ export class ChartService {
    * @param sideProject, (opcional) proyecto secundario a representar y comparar con el principal 
    * @returns AgChartOptions, una clase de configuración de gráfico para poder representarlo en el componente
    */
-  public buildChart(metric: string, mainProject: string, sideProject? : string) : AgChartOptions {
+  public async buildChart(metric: string, mainProject: string, sideProject? : string) : Promise<AgChartOptions> {
     // Obtenemos la métrica a representar en el gráfico
     const keyMetric = this.benchmarkService.keyableMetric(metric);
 
     // Creamos una nueva configuración "en blanco"
     let optionsObject = this.createBlankChartOptions();
 
+    let maxDataValue = 0; // Usaremos esto para calcular los dominios de los ejes
+
     if (sideProject){
       // Cargamos los benchmarks de ambos proyectos en la configuración
-      optionsObject.data = this.benchmarkService.findOneMetricBenchmarksForTwoProjects(keyMetric as keyof Benchmark, mainProject, sideProject);
-
+      const dataForLoad = await this.benchmarkService.findOneMetricBenchmarksForTwoProjects(keyMetric as keyof Benchmark, mainProject, sideProject);
+      console.log("Datos del chart: ", dataForLoad);
+      optionsObject.data = dataForLoad;
       //Obtenemos los colores de la barra de cada proyecto y actualizamos la serie por defecto
-      const barColors = this.colorDefiner.getBarColorCode(keyMetric, mainProject, sideProject);
+      const barColors = await this.colorDefiner.getBarColorCode(keyMetric, mainProject, sideProject);
       optionsObject.series[0].fill =  barColors.mainProjectColorCode as string;
 
       // Creamos la segunda serie de barras para representar el proyecto secundario
       optionsObject.series.push({ xKey: 'period', yKey: 'sideMetric', type: 'bar', fill: barColors.sideProjectColorCode as string});
 
-      // Agregamos el eje del proyecto secundario para que sea visible en el gráfico
-      optionsObject.axes.push({type: 'number', position: 'right', keys: ['sideMetric'], label: {color: '#121212'}});
+      // Calcula el valor máximo para ajustar los ejes
+      maxDataValue = Math.max(...dataForLoad.map(item => Math.max(item.mainMetric, item.sideMetric as number)));
+
+      // Configura ambos ejes para que tengan el mismo rango
+      optionsObject.axes = [
+        {
+          // Ajustes del eje inferior (fechas de evaluaciones)
+          type: 'category',
+          position: 'bottom',
+          label: {
+            color: 'white', 
+          }
+        },
+        {
+          type: 'number',
+          position: 'left',
+          keys: ['mainMetric'],
+          label: { color: 'white' },
+          min: 0, // Asumiendo que no hay valores negativos
+          max: maxDataValue * 1.1 // Ajusta aquí según la necesidad para dar espacio adicional
+        },
+        {
+          type: 'number',
+          position: 'right',
+          keys: ['sideMetric'],
+          label: { color: '#121212' },
+          min: 0,
+          max: maxDataValue * 1.1 // Mismo ajuste para el eje derecho
+        }
+      ];
 
     } else {
       //Obtenemos los colores de la barra y actualizamos la serie por defecto
-      const barColors = this.colorDefiner.getBarColorCode(keyMetric, mainProject);
+      const barColors = await this.colorDefiner.getBarColorCode(keyMetric, mainProject);
       optionsObject.series[0].fill =  barColors.mainProjectColorCode as string;
       // Cargamos los benchmarks del proyecto principal
-      optionsObject.data = this.benchmarkService.findOneMetricBenchmarks(keyMetric as keyof Benchmark, mainProject);
+      let dataForLoad = await this.benchmarkService.findOneMetricBenchmarks(keyMetric as keyof Benchmark, mainProject);
+      console.log("Datos del chart: ", dataForLoad);
+      optionsObject.data = dataForLoad;
     }
-
+    console.log(optionsObject);
     return optionsObject as AgChartOptions;
   }
 

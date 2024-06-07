@@ -1,19 +1,77 @@
 <app-header></app-header>
 
+<div *ngIf="loading">
+  <p>
+    Cargando...
+  </p>
+  
+</div>
 
-<ion-content>
-  <!-- Barra de busqueda -->
-  <ion-grid>
-    <ion-row>
-      <ion-col></ion-col>
-      <ion-col size="7">
-        <ion-searchbar animated [debounce]="1000" placeholder="Search for a project" color="light" (ionChange) = "buscar($event)"></ion-searchbar>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <!-- Proyectos -->
-  <app-project-card-list [projects]="projects" [searchText]="searchText"></app-project-card-list>
+  <!-- Resto de tu interfaz de usuario aquí -->
+  <ion-content>
+    <div *ngIf="!loading">
+      <!-- Barra de busqueda -->
+      <ion-grid>
+        <ion-row>
+          <ion-col></ion-col>
+          <ion-col size="7">
+            <ion-searchbar animated [debounce]="1000" placeholder="Search for a project" color="light" (ionChange) = "buscar($event)"></ion-searchbar>
+          </ion-col>
+          <ion-col></ion-col>
+        </ion-row>
+      </ion-grid>
     
-</ion-content>
+      <!-- Proyectos -->
+      <!-- <app-project-card-list [projects]="projects" [searchText]="searchText"></app-project-card-list> -->
+      <!-- Contenedor Flex para las tarjetas -->
+      <div class="cards-container">
+        <!-- Bucle para generar las tarjetas -->
+        <ion-card *ngFor="let cardMetricsColor of cardMetricsColors | searchFilter:searchText" button="true" style="border-radius: 15px;">
+          <ion-card-header>
+            <ion-card-title>{{ cardMetricsColor.projectTitle }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col class="custom-ionic-col" (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false" [ngStyle]="{'position': 'relative'}" (click)="navigateTo('/release-freq/' + cardMetricsColor.projectName)">
+                  <ion-icon aria-hidden="true" name="stopwatch-outline" size="large"
+                            [ngStyle]="{'color': cardMetricsColor.releaseFreqCode}"></ion-icon>
+                  <div *ngIf="showTooltip" class="custom-tooltip" [ngStyle]="{'color': cardMetricsColor.releaseFreqCode}">Release frequency</div>
+                </ion-col>
+                <ion-col class="custom-ionic-col" (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false" [ngStyle]="{'position': 'relative'}" (click)="navigateTo('/lead-time/' + cardMetricsColor.projectName)">
+                  <ion-icon aria-hidden="true" name="hourglass-outline" size="large" 
+                            [ngStyle]="{'color': cardMetricsColor.leadTimeCode}"></ion-icon>
+                  <div *ngIf="showTooltip" class="custom-tooltip" [ngStyle]="{'color': cardMetricsColor.leadTimeCode}">Lead time</div>
+                </ion-col>
+                <ion-col class="custom-ionic-col" (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false" [ngStyle]="{'position': 'relative'}" (click)="navigateTo('/time-repair/' + cardMetricsColor.projectName)">
+                  <ion-icon aria-hidden="true" name="hammer-outline" size="large" 
+                            [ngStyle]="{'color': cardMetricsColor.timeToRepairCode}"></ion-icon>
+                  <div *ngIf="showTooltip" class="custom-tooltip" [ngStyle]="{'color': cardMetricsColor.timeToRepairCode}">Time to repair code</div>
+                </ion-col>
+                <ion-col class="custom-ionic-col" (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false" [ngStyle]="{'position': 'relative'}" (click)="navigateTo('/bug-issues-rate/' + cardMetricsColor.projectName)">
+                  <ion-icon aria-hidden="true" name="bug-outline" size="large" 
+                            [ngStyle]="{'color': cardMetricsColor.bugIssuesRateCode}"></ion-icon>
+                  <div *ngIf="showTooltip" class="custom-tooltip" [ngStyle]="{'color': cardMetricsColor.bugIssuesRateCode}">Bug issues rate</div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="custom-ionic-col boldValues" [ngStyle]="{'color': cardMetricsColor.releaseFreqCode}">
+                  {{ findProject(cardMetricsColor.projectName).releaseFrequency | number:'1.0-2' }}
+                </ion-col>
+                <ion-col class="custom-ionic-col boldValues" [ngStyle]="{'color': cardMetricsColor.leadTimeCode}">
+                  {{ findProject(cardMetricsColor.projectName).leadTime | number:'1.0-2' }}
+                </ion-col>
+                <ion-col class="custom-ionic-col boldValues" [ngStyle]="{'color': cardMetricsColor.timeToRepairCode}">
+                  {{ findProject(cardMetricsColor.projectName).timeToRepair | number:'1.0-2' }}
+                </ion-col>
+                <ion-col class="custom-ionic-col boldValues" [ngStyle]="{'color': cardMetricsColor.bugIssuesRateCode}">
+                  {{ findProject(cardMetricsColor.projectName).bugIssuesRate | number:'1.0-2' }}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+    
+  </ion-content>

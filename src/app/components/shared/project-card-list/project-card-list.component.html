@@ -2,7 +2,7 @@
   <!-- Contenedor Flex para las tarjetas -->
   <div class="cards-container">
     <!-- Bucle para generar las tarjetas -->
-    <ion-card *ngFor="let cardMetricsColor of cardMetricsColors | searchFilter:searchText" button="true" style="border-radius: 15px;">
+    <ion-card *ngFor="let cardMetricsColor of cardMetricsColors" button="true" style="border-radius: 15px;">
       <ion-card-header>
         <ion-card-title>{{ cardMetricsColor.projectTitle }}</ion-card-title>
       </ion-card-header>
@@ -32,16 +32,16 @@
           </ion-row>
           <ion-row>
             <ion-col class="custom-ionic-col boldValues" [ngStyle]="{'color': cardMetricsColor.releaseFreqCode}">
-              {{ findProject(cardMetricsColor.projectName).releaseFrequency }}
+              {{ findProject(cardMetricsColor.projectName).releaseFrequency | number:'1.0-2' }}
             </ion-col>
             <ion-col class="custom-ionic-col boldValues" [ngStyle]="{'color': cardMetricsColor.leadTimeCode}">
-              {{ findProject(cardMetricsColor.projectName).leadTime }}
+              {{ findProject(cardMetricsColor.projectName).leadTime | number:'1.0-2' }}
             </ion-col>
             <ion-col class="custom-ionic-col boldValues" [ngStyle]="{'color': cardMetricsColor.timeToRepairCode}">
-              {{ findProject(cardMetricsColor.projectName).timeToRepair }}
+              {{ findProject(cardMetricsColor.projectName).timeToRepair | number:'1.0-2' }}
             </ion-col>
             <ion-col class="custom-ionic-col boldValues" [ngStyle]="{'color': cardMetricsColor.bugIssuesRateCode}">
-              {{ findProject(cardMetricsColor.projectName).bugIssuesRate }}
+              {{ findProject(cardMetricsColor.projectName).bugIssuesRate | number:'1.0-2' }}
             </ion-col>
           </ion-row>
         </ion-grid>

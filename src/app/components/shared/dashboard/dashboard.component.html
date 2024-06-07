@@ -1,34 +1,40 @@
-<ion-card class="dashboard" style="margin-top: 25px;">
-  <ion-card-header *ngIf="project">
-    <ion-card-title>{{ this.project.title }}</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-item lines="none">
-      <ion-label>Previous month difference</ion-label>
-      <ion-note slot="end" color="secondary" class="data-number">{{periodVariation}}</ion-note>
-    </ion-item>
-    <ion-item lines="none">
-      <ion-label>Current value</ion-label>
-      <ion-note slot="end" color="success" class="data-number">{{currentValue.toFixed(2)}}</ion-note>
-    </ion-item>
-    <ion-item lines="none">
-      <ion-label>Best historic value ({{bestValue.period}})</ion-label>
-      <ion-note slot="end" color="success" class="data-number">{{bestValue.mainMetric.toFixed(2)}}</ion-note>
-    </ion-item>
-    <ion-item lines="none">
-      <ion-label>Worst historic value ({{worstValue.period}})</ion-label>
-      <ion-note slot="end" color="danger" class="data-number">{{worstValue.mainMetric.toFixed(2)}}</ion-note>
-    </ion-item>
+<div *ngIf="loading">
+  <p>Cargando dashboard...</p>
+</div>
 
-    <hr class="custom-hr" />
-
-    <ion-item lines="none">
-      <ion-label>Best current global value ({{findProjectTitle(bestGlobalValue.projectName)}})</ion-label>
-      <ion-note slot="end" color="success" class="data-number">{{bestGlobalValue.value.toFixed(2)}}</ion-note>
-    </ion-item>
-    <ion-item lines="none">
-      <ion-label>Worst current global value ({{findProjectTitle(worstGlobalValue.projectName)}})</ion-label>
-      <ion-note slot="end" color="danger" class="data-number">{{worstGlobalValue.value.toFixed(2)}}</ion-note>
-    </ion-item>
-  </ion-card-content>
-</ion-card>
+<div *ngIf="!loading">
+  <ion-card class="dashboard" style="margin-top: 25px;">
+    <ion-card-header *ngIf="project">
+      <ion-card-title>{{ this.project.title }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label>Previous period difference</ion-label>
+        <ion-note slot="end" color="secondary" class="data-number">{{periodVariation}}</ion-note>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Current value</ion-label>
+        <ion-note slot="end" color="success" class="data-number">{{currentValue | number:'1.0-2'}}</ion-note>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Best historic value ({{bestValue.period}})</ion-label>
+        <ion-note slot="end" color="success" class="data-number">{{bestValue.mainMetric | number:'1.0-2'}}</ion-note>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Worst historic value ({{worstValue.period}})</ion-label>
+        <ion-note slot="end" color="danger" class="data-number">{{worstValue.mainMetric | number:'1.0-2'}}</ion-note>
+      </ion-item>
+  
+      <hr class="custom-hr" />
+  
+      <ion-item lines="none">
+        <ion-label>Best current global value ({{ bestGlobalValueTitle }})</ion-label>
+        <ion-note slot="end" color="success" class="data-number">{{bestGlobalValue.value | number:'1.0-2'}}</ion-note>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Worst current global value ({{ worstGlobalValueTitle }})</ion-label>
+        <ion-note slot="end" color="danger" class="data-number">{{worstGlobalValue.value | number:'1.0-2'}}</ion-note>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</div>
