@@ -1,32 +1,39 @@
 <app-header></app-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col justify-content-center> <!-- grafica -->
-        <app-chart [metric] = "metric" [mainProject] = "project" [sideProject]="sideProject?.name"></app-chart>
+  <div *ngIf="loading">
+    <p>Cargando grafica...</p>
+  </div>
 
-        <!-- selector de proyecto secundario -->
-
-        <div class="select-container">
-          <select name="Side project" (change)="changeSideProject($event)">
-            <option [value]="undefined">Select a project for direct comparison</option>
-            <option [value]="sideProject.name" *ngFor="let sideProject of allProjects" [selected]="sideProject.title === dropdownName">{{sideProject.title}}</option>
-          </select>
-        
-          <ion-button class="reset-dropdown" *ngIf="sideProject" (click)="resetSelection()" fill="clear">
-            <ion-icon name="close-circle"></ion-icon>
-          </ion-button>
-        </div>
-
-      </ion-col>
+  <div *ngIf="!loading">
+    <ion-grid>
+      <ion-row>
+        <ion-col justify-content-center> <!-- grafica -->
+          <app-chart [metric] = "metric" [mainProject] = "projectName" [sideProject]="sideProject?.name"></app-chart>
   
-      <ion-col justify-content-center> <!-- dashboard -->
-        <app-dashboard [projectTitle] = "project" ></app-dashboard>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+          <!-- selector de proyecto secundario -->
+  
+          <div class="select-container">
+            <select name="Side project" (change)="changeSideProject($event)">
+              <option [value]="undefined">Select a project for direct comparison</option>
+              <option [value]="sideProject.name" *ngFor="let sideProject of allProjects" [selected]="sideProject.title === dropdownName">{{sideProject.title}}</option>
+            </select>
+          
+            <ion-button class="reset-dropdown" *ngIf="sideProject" (click)="resetSelection()" fill="clear">
+              <ion-icon name="close-circle"></ion-icon>
+            </ion-button>
+          </div>
+  
+        </ion-col>
+    
+        <ion-col justify-content-center> <!-- dashboard -->
+          <app-dashboard [projectTitle] = "projectName" ></app-dashboard>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  
 </ion-content>
 
-<app-metric-menu [project] = "project"></app-metric-menu>
+<app-metric-menu [project] = "projectName"></app-metric-menu>
 

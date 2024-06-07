@@ -12,6 +12,7 @@ import { MetricMenuModule } from 'src/app/components/shared/metric-menu/metric-m
 import { DashboardModule } from 'src/app/components/shared/dashboard/dashboard.component.module';
 import { ChartComponent } from 'src/app/components/shared/chart/chart.component';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     DashboardModule,
     MetricMenuModule,
     ChartComponent,
-    PipesModule
+    PipesModule,
+    HttpClientModule 
   ],
   declarations: [BugIssuesRateDetailsPage]
 })

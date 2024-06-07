@@ -3,6 +3,8 @@ export interface Axe {
     position: string;
     type: string;
     keys?: string[];
+    min?: number;
+    max?: number;
 }
 
 export interface Background {
