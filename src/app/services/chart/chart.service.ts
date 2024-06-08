@@ -56,7 +56,6 @@ export class ChartService {
     if (sideProject){
       // Cargamos los benchmarks de ambos proyectos en la configuración
       const dataForLoad = await this.benchmarkService.findOneMetricBenchmarksForTwoProjects(keyMetric as keyof Benchmark, mainProject, sideProject);
-      console.log("Datos del chart: ", dataForLoad);
       optionsObject.data = dataForLoad;
       //Obtenemos los colores de la barra de cada proyecto y actualizamos la serie por defecto
       const barColors = await this.colorDefiner.getBarColorCode(keyMetric, mainProject, sideProject);
@@ -102,10 +101,8 @@ export class ChartService {
       optionsObject.series[0].fill =  barColors.mainProjectColorCode as string;
       // Cargamos los benchmarks del proyecto principal
       let dataForLoad = await this.benchmarkService.findOneMetricBenchmarks(keyMetric as keyof Benchmark, mainProject);
-      console.log("Datos del chart: ", dataForLoad);
       optionsObject.data = dataForLoad;
     }
-    console.log(optionsObject);
     return optionsObject as AgChartOptions;
   }
 

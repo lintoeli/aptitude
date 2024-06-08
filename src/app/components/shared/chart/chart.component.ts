@@ -44,14 +44,10 @@ export class ChartComponent implements OnInit, OnDestroy{
       this.chartService.sideProject$.subscribe(async project => {
         this.loading = true;
         if (project) {
-          console.log("Proyecto doble en chart component");
           await this.loadChartOptions(this.metric, this.mainProject, project.name);
-          console.log("se cargaron las opciones: ", this.chartOptions);
           this.loading = false;
         } else {
-          console.log("Proyecto en chart component");
           await this.loadChartOptions(this.metric, this.mainProject);
-          console.log("se cargaron las opciones: ", this.chartOptions);
           this.loading = false;
         }
       })

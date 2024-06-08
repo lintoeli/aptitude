@@ -17,7 +17,6 @@ export class BenchmarkService {
   public async loadBenchmarksFromBackend(){
     this.benchmarks = [];
     this.benchmarks = await firstValueFrom(this.APIService.getAllBenchmarks());
-    //console.log("Benchmarks obtenidos del backend: ", this.benchmarks)
   }
 
   /**
