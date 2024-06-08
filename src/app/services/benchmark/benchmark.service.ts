@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Benchmark, DashboardBenchmark, SimpleBenchmark } from 'src/app/models/benchmark.model';
 import { sampleData } from './benchmark.data';
+import { BenchmarkAPIService } from '../api/benchmark/benchmark.api.service';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +10,14 @@ import { sampleData } from './benchmark.data';
 export class BenchmarkService {
 
   // Cargamos los benchmarks de prueba
-  benchmarks = sampleData; 
+  benchmarks!: Benchmark[]; 
 
-  constructor() { }
+  constructor(private APIService: BenchmarkAPIService) { }
+
+  public async loadBenchmarksFromBackend(){
+    this.benchmarks = [];
+    this.benchmarks = await firstValueFrom(this.APIService.getAllBenchmarks());
+  }
 
   /**
    * Formatea el string de la métrica obtenida de la ruta para que pueda  ser usada como clave en
@@ -38,7 +45,7 @@ export class BenchmarkService {
    * @returns Benchmark[], lista con todos los benchmarks del proyecto indicado por el parametro
    */
   public getProjectBenchmark(projectName: string): Benchmark[] {
-    return this.benchmarks.filter((benchmark)=> benchmark.project == projectName);
+    return this.benchmarks.filter((benchmark)=> benchmark.projectName == projectName);
   }
 
   /**
@@ -58,12 +65,13 @@ export class BenchmarkService {
    * @returns Object[], devuelve un array de objetos donde cada uno contiene el periodo donde se calculó
    *          el rendimiento en la métrica indicada y su respectivo valor
    */
-  findOneMetricBenchmarks(metric: keyof Benchmark, project: string) :  SimpleBenchmark[] {
-    if (metric === 'project' || metric === 'period' || metric === 'id') {
+  async findOneMetricBenchmarks(metric: keyof Benchmark, project: string) :  Promise<SimpleBenchmark[]> {
+    await this.loadBenchmarksFromBackend();
+    if (metric === 'projectName' || metric === 'period' || metric === 'id') {
       throw new Error('The metric must be a numeric property of Benchmark.');
     } 
     return this.benchmarks
-        .filter(item => item.project === project)
+        .filter(item => item.projectName === project)
         .map(item => ({period: item.period, mainMetric: item[metric]} as SimpleBenchmark));
   }
 
@@ -77,13 +85,14 @@ export class BenchmarkService {
    * @returns Object[], devuelve un array de objetos donde cada uno contiene el periodo donde se calculó
    *          el rendimiento en la métrica indicada y su respectivo valor para cada proyecto
    */
-  public findOneMetricBenchmarksForTwoProjects(metric: keyof Benchmark, mainProject: string, sideProject: string): SimpleBenchmark[] {
-    if (metric === 'project' || metric === 'period' || metric === 'id') {
+  public async findOneMetricBenchmarksForTwoProjects(metric: keyof Benchmark, mainProject: string, sideProject: string): Promise<SimpleBenchmark[]> {
+    await this.loadBenchmarksFromBackend();
+    if (metric === 'projectName' || metric === 'period' || metric === 'id') {
         throw new Error('The metric must be a numeric property of Benchmark.');
     }
 
-    const mainProjectData = this.benchmarks.filter(item => item.project === mainProject);
-    const sideProjectData = this.benchmarks.filter(item => item.project === sideProject);
+    const mainProjectData = this.benchmarks.filter(item => item.projectName === mainProject);
+    const sideProjectData = this.benchmarks.filter(item => item.projectName === sideProject);
 
     return mainProjectData.map(item => {
         const sideItem = sideProjectData.find(side => side.period === item.period);
@@ -95,13 +104,12 @@ export class BenchmarkService {
     });
   }
 
-  public getPreviousPeriodVariation(metric: keyof Benchmark, project: string) {
-
-    if (metric === 'project' || metric === 'period' || metric === 'id') {
+  public async getPreviousPeriodVariation(metric: keyof Benchmark, project: string) {
+    if (metric === 'projectName' || metric === 'period' || metric === 'id') {
       throw new Error('The metric must be a numeric property of Benchmark.');
     } 
     // Obtenemos benchmarks de un proyecto para una métrica
-    const benchmarks = this.findOneMetricBenchmarks(metric, project);
+    const benchmarks = await this.findOneMetricBenchmarks(metric, project);
     
     // Parseamos el ultimo y el penultimo a la entidad SimpleBenchmark
     const lastBenchmark =  benchmarks[benchmarks.length - 1] as SimpleBenchmark;
@@ -111,44 +119,55 @@ export class BenchmarkService {
     return lastBenchmark.mainMetric - previousBenchmark.mainMetric;
   }
 
-  public getBestBenchmark(metric: keyof Benchmark, project: string) {
-
-    if (metric === 'project' || metric === 'period' || metric === 'id') {
+  public async getWorstBenchmark(metric: keyof Benchmark, project: string) {
+    if (metric === 'projectName' || metric === 'period' || metric === 'id') {
       throw new Error('The metric must be a numeric property of Benchmark.');
     } 
     // Obtenemos benchmarks de un proyecto para una métrica
-    const benchmarks = this.findOneMetricBenchmarks(metric, project) as SimpleBenchmark[];
+    const benchmarks = await this.findOneMetricBenchmarks(metric, project) as SimpleBenchmark[];
 
     return benchmarks.reduce((max, item) => max.mainMetric > item.mainMetric ? max : item);
   }
 
-  public getWorstBenchmark(metric: keyof Benchmark, project: string) {
+  public async getBestBenchmark(metric: keyof Benchmark, project: string) {
     // Obtenemos benchmarks de un proyecto para una métrica
-    const benchmarks = this.findOneMetricBenchmarks(metric, project) as SimpleBenchmark[];
+    const benchmarks = await this.findOneMetricBenchmarks(metric, project) as SimpleBenchmark[];
 
-    return benchmarks.reduce((min, item) => min.mainMetric < item.mainMetric ? min : item);
-  }
+    // Filtrar los benchmarks para excluir aquellos donde mainMetric es 0
+    const validBenchmarks = benchmarks.filter(item => item.mainMetric > 0);
 
-  public getGlobalBestBenchmark(metric: keyof Benchmark){
-
-    if (metric === 'project' || metric === 'period' || metric === 'id') {
-      throw new Error('The metric must be a numeric property of Benchmark.');
-    } 
-
-    let currentBenchmarks = this.benchmarks.filter((item) => item.period === "2023-S2");
-    const max = currentBenchmarks.reduce((max, item) => max[metric] > item[metric] ? max : item);
-    return { period: max.period, value: max[metric], projectName: max.project } as DashboardBenchmark;
-  }
-
-
-  public getGlobalWorstBenchmark(metric: keyof Benchmark){
-
-    if (metric === 'project' || metric === 'period' || metric === 'id') {
-      throw new Error('The metric must be a numeric property of Benchmark.');
-    } 
+    // Verificar si aún hay benchmarks válidos después de filtrar
+    if (validBenchmarks.length === 0) {
+      return benchmarks.reduce((min, item) => min.mainMetric < item.mainMetric ? min : item);
+    } else {
+      // Reducir para encontrar el benchmark con el valor mínimo de mainMetric que no sea 0
+      return validBenchmarks.reduce((min, item) => min.mainMetric < item.mainMetric ? min : item);
+    }
     
-    let currentBenchmarks = this.benchmarks.filter((item) => item.period === "2023-S2");
+
+    
+}
+
+  public async getGlobalWorstBenchmark(metric: keyof Benchmark){
+    await this.loadBenchmarksFromBackend();
+    if (metric === 'projectName' || metric === 'period' || metric === 'id') {
+      throw new Error('The metric must be a numeric property of Benchmark.');
+    } 
+
+    let currentBenchmarks = this.benchmarks.filter((item) => item.period === "2023-S1");
+    const max = currentBenchmarks.reduce((max, item) => max[metric] > item[metric] ? max : item);
+    return { period: max.period, value: max[metric], projectName: max.projectName } as DashboardBenchmark;
+  }
+
+
+  public async getGlobalBestBenchmark(metric: keyof Benchmark){
+    await this.loadBenchmarksFromBackend();
+    if (metric === 'projectName' || metric === 'period' || metric === 'id') {
+      throw new Error('The metric must be a numeric property of Benchmark.');
+    } 
+    // Descartamos los ceros ya que son valores que no se han calculado correctamente
+    let currentBenchmarks = this.benchmarks.filter((item) => item.period === "2023-S1" && item[metric] > 0); 
     const min = currentBenchmarks.reduce((min, item) => min[metric] < item[metric] ? min : item);
-    return { period: min.period, value: min[metric], projectName: min.project } as DashboardBenchmark;
+    return { period: min.period, value: min[metric], projectName: min.projectName } as DashboardBenchmark;
   }
 }

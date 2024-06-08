@@ -3,6 +3,9 @@ import { ColorRange } from 'src/app/models/color-range.model';
 import { ProjectService } from '../project/project.service';
 import { Project } from 'src/app/models/project.model';
 import { CardMetricsColors } from 'src/app/models/card-metrics-colors.model';
+import { ColorRangeAPIService } from '../api/colorRange/colorRange.api.service';
+import { ProjectAPIService } from '../api/project/project.api.service';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -24,32 +27,54 @@ export class ColorDefinerService {
   mainRed: string = '#ff0000';
   sideRed: string= '#940404';
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService,
+              private projectAPIService: ProjectAPIService,
+              private colorRangeAPIService: ColorRangeAPIService
+  ) { }
 
   /**
    * Establece los rangos de valores que pertenecen a cada color para cada métrica
    */
-  public defineColorRanges(): void {
-    this.colorRanges = [];
-    const projects = this.projectService.getAllProjects();
+  public async defineColorRanges(): Promise<void> {
+    const data = await this.colorRangeAPIService.getAllRanges().toPromise();
+    this.colorRanges = this.mapRangeObject(data as any[]);
+    // const projects = this.projectService.getAllProjects();
 
-    this.metrics.forEach(metric => {
-      // Extraer todos los valores de la métrica actual de los proyectos
-      const values = projects.map(project => project[metric as keyof Project] as number);
-      values.sort((a, b) => a - b); // Ordenar valores para calcular percentiles
+    // this.metrics.forEach(metric => {
+    //   // Extraer todos los valores de la métrica actual de los proyectos
+    //   const values = projects.map(project => project[metric as keyof Project] as number);
+    //   values.sort((a, b) => a - b); // Ordenar valores para calcular percentiles
   
-      // Calcular percentiles
-      const lowPercentileIndex = Math.floor(values.length / 3);
-      const highPercentileIndex = Math.ceil(2 * values.length / 3);
+    //   // Calcular percentiles
+    //   const lowPercentileIndex = Math.floor(values.length / 3);
+    //   const highPercentileIndex = Math.ceil(2 * values.length / 3);
   
-      // Crear ColorRange para la métrica actual
-      this.colorRanges.push({
-        metric: metric,
-        green: { start: values[highPercentileIndex] + 0.01, end: Math.max(...values) },
-        yellow: { start: values[lowPercentileIndex]+ 0.01, end: values[highPercentileIndex] },
-        red: { start: Math.min(...values), end: values[lowPercentileIndex] }
-      });
+    //   // Crear ColorRange para la métrica actual
+    //   this.colorRanges.push({
+    //     metric: metric,
+    //     green: { start: values[highPercentileIndex] + 0.01, end: Math.max(...values) },
+    //     yellow: { start: values[lowPercentileIndex]+ 0.01, end: values[highPercentileIndex] },
+    //     red: { start: Math.min(...values), end: values[lowPercentileIndex] }
+    //   });
+    // });
+  }
+
+  private mapRangeObject(data: any[]) {
+    let parsedRanges : ColorRange[] = [];
+    data.forEach(range => {
+      const greenParts = range.green.split(',').map((s: string) => parseFloat(s.trim()));
+      const yellowParts = range.yellow.split(',').map((s: string) => parseFloat(s.trim()));
+      const redParts = range.red.split(',').map((s: string) => parseFloat(s.trim()));
+
+      let newRange: ColorRange = {
+          metric: range.metric,
+          green: { start: greenParts[0], end: greenParts[1] },
+          yellow: { start: yellowParts[0], end: yellowParts[1] },
+          red: { start: redParts[0], end: redParts[1] }
+      };
+      parsedRanges.push(newRange);
     });
+    return parsedRanges;
   }
 
   /**
@@ -59,18 +84,18 @@ export class ColorDefinerService {
    * @param sideProjectName, opcional, nombre del proyecto secundario a representar 
    * @returns Object, con los códigos de color en hexadecimal para el proyecto principal o para ambos proyectos
    */
-  public getBarColorCode(metric: string, mainProjectName: string, sideProjectName?: string){
-    this.defineColorRanges();
+  public async getBarColorCode(metric: string, mainProjectName: string, sideProjectName?: string){
+    await this.defineColorRanges();
     // Obtenemos los rangos de colores de la métrica especificada
     const range = this.colorRanges.filter((item) => item.metric === metric)[0];
 
-    const mainProject = this.projectService.findOneProjectByName(mainProjectName);
+    const mainProject = await firstValueFrom(this.projectAPIService.getProjectByName(mainProjectName));
     const mainProjectMetricValue = mainProject[metric as keyof Project] as number;
     const mainProjectColorCode = this.checkValueInterval(range, mainProjectMetricValue);
 
     // Comprobamos si hay que definir el color del proyecto secundario
     if (sideProjectName){
-      const sideProject = this.projectService.findOneProjectByName(sideProjectName);
+      const sideProject = await firstValueFrom(this.projectAPIService.getProjectByName(sideProjectName));
       const sideProjectMetricValue = sideProject[metric as keyof Project] as number;
 
       // Llamamos al método auxiliar que saca el código del color según a que intervalo pertenece
@@ -88,8 +113,8 @@ export class ColorDefinerService {
    * @param project, objeto Project del cual se obtendrán sus colores 
    * @returns Object con el nombre, el título y los códigos de color de cada métrica del proyecto
    */
-  public getMetricsCardColor(project: Project){
-    this.defineColorRanges();
+  public async getMetricsCardColor(project: Project){
+    await this.defineColorRanges();
     // Obtenemos los colorRange de cada métrica y su código de color
     const releaseFreqRange = this.colorRanges.find( item => item.metric == "releaseFrequency");
     const releaseFreqCode = this.checkValueInterval(releaseFreqRange as ColorRange,  project.releaseFrequency as number);
@@ -117,7 +142,9 @@ export class ColorDefinerService {
    * @returns string, código de color correspondiente al valor indicado
    */
   private checkValueInterval(range: ColorRange, projectMetricValue: number, isSideProject:  boolean = false): string{
-    if (projectMetricValue >= range.green.start) {
+    if (projectMetricValue < 0.01){
+      return isSideProject ? "#5c5c5c" : "#828282"; // sideGrey, mainGrey
+    } else if (projectMetricValue >= range.green.start && projectMetricValue < range.green.end) {
       return isSideProject ? '#076e03' : '#07de00'; // sideGreen, mainGreen
     } else if (projectMetricValue >= range.yellow.start && projectMetricValue < range.yellow.end) {
       return isSideProject ? '#ffc800' : '#fffb00'; // sideYellow, mainYellow
