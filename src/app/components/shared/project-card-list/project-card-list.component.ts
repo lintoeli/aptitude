@@ -25,13 +25,11 @@ export class ProjectCardListComponent  implements OnInit {
   async ngOnInit() {
     this.projects.sort((a, b) => a.title.localeCompare(b.title));
 
-    console.log(this.projects);
 
     this.cardMetricsColors = await Promise.all(this.projects.map(async p => {
       return await this.colorDefiner.getMetricsCardColor(p);
     }));
 
-    console.log("Cardmetrics color: ", this.cardMetricsColors)
 
   }
 

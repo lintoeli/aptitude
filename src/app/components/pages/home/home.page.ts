@@ -65,7 +65,6 @@ export class HomePage implements OnInit {
   }
 
   navigateTo(path: string): void {
-    console.log(path);
     this.router.navigate([path], {replaceUrl: true});
   }
   

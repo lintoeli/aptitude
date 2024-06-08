@@ -45,6 +45,15 @@ export class ReleaseFreqDetailsPage implements OnInit {
     
     // Obtenemos de la ruta el nombre del proyecto
     this.projectName = this.route.snapshot.params['project'];
+
+    //Comprobamos que el proyecto exista. si no, redirigimos al home
+    let existingProject!: Project; 
+    try {
+      existingProject = await firstValueFrom(this.projectAPIService.getProjectByName(this.projectName));
+    } catch {
+      this.router.navigate(['/home'], {replaceUrl: true});
+    }
+    
     // Obtenemos la lista de proyectos y los ordenamos
     this.allProjects = await firstValueFrom(this.projectAPIService.getAllProjects());
     this.allProjects.sort((a, b) => a.title.localeCompare(b.title));
@@ -52,7 +61,6 @@ export class ReleaseFreqDetailsPage implements OnInit {
     // Aquí nos suscribimos al estado de doubleChart
     this.subscription.add(this.chartService.doubleChart$.subscribe(async doubleChart => {
       await this.chartService.buildChart(this.metric, this.projectName);
-      console.log("builded chart")
       this.doubleChart = doubleChart;
       this.loading = false;
     }));
