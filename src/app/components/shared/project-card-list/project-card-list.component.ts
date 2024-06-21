@@ -12,29 +12,29 @@ import { ProjectService } from 'src/app/services/project/project.service';
 })
 export class ProjectCardListComponent  implements OnInit {
 
-  @Input() projects: Project[] = [];
+  @Input() projects!: Project[];
   @Input() searchText?: string
 
   showTooltip = false;
 
-  cardMetricsColors: CardMetricsColors[] = [];
+  cardMetricsColors!: CardMetricsColors[];
   constructor(private router: Router, 
               private colorDefiner: ColorDefinerService, 
               private projectService: ProjectService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.projects.sort((a, b) => a.title.localeCompare(b.title));
 
-    this.cardMetricsColors = [];
 
-    this.projects.forEach(p => {
-      this.cardMetricsColors.push(this.colorDefiner.getMetricsCardColor(p));
-    })
+    this.cardMetricsColors = await Promise.all(this.projects.map(async p => {
+      return await this.colorDefiner.getMetricsCardColor(p);
+    }));
+
 
   }
 
   findProject(projectName: string){
-    return this.projectService.findOneProjectByName(projectName);
+    return this.projects.find(p => p.name === projectName);
   }
 
   navigateTo(path: string): void {
