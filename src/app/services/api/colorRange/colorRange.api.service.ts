@@ -8,11 +8,11 @@ import { ColorRange } from "src/app/models/color-range.model";
   })
   export class ColorRangeAPIService{
     private baseLocalUrl = 'http://localhost:8080/colorRanges'; // URL servidor local
-    private baseDeployUrl = ''; // URL servidor remoto
+    private baseDeployUrl = 'https://aptitude.diversolab.io/colorRanges'; // URL servidor remoto
 
     constructor(private http: HttpClient) {}
 
     getAllRanges(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.baseLocalUrl}/all`);
+        return this.http.get<any[]>(`${this.baseDeployUrl}/all`);
     }
   }

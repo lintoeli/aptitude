@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { PipesModule } from './pipes/pipes.module';
 import { DashboardModule } from './components/shared/dashboard/dashboard.component.module';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
             AppRoutingModule, 
             PipesModule, 
             DashboardModule,
-            HttpClientModule],
+            HttpClientModule,
+            NgxSpinnerModule ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
