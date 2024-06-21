@@ -67,7 +67,7 @@ export class ChartService {
       // Calcula el valor máximo para ajustar los ejes
       maxDataValue = Math.max(...dataForLoad.map(item => Math.max(item.mainMetric, item.sideMetric as number)));
 
-      // Configura ambos ejes para que tengan el mismo rango
+      // Configuración de ambos ejes para que tengan el mismo rango
       optionsObject.axes = [
         {
           // Ajustes del eje inferior (fechas de evaluaciones)
@@ -82,8 +82,8 @@ export class ChartService {
           position: 'left',
           keys: ['mainMetric'],
           label: { color: 'white' },
-          min: 0, // Asumiendo que no hay valores negativos
-          max: maxDataValue * 1.1 // Ajusta aquí según la necesidad para dar espacio adicional
+          min: 0, 
+          max: maxDataValue * 1.1 
         },
         {
           type: 'number',
@@ -91,7 +91,7 @@ export class ChartService {
           keys: ['sideMetric'],
           label: { color: '#121212' },
           min: 0,
-          max: maxDataValue * 1.1 // Mismo ajuste para el eje derecho
+          max: maxDataValue * 1.1
         }
       ];
 

@@ -9,11 +9,11 @@ import { Benchmark } from "src/app/models/benchmark.model";
   export class BenchmarkAPIService{
 
     private baseLocalUrl = 'http://localhost:8080/benchmarks'; // URL servidor local
-    private baseDeployUrl = ''; // URL servidor remoto
+    private baseDeployUrl = 'https://aptitude.diversolab.io/benchmarks'; // URL servidor remoto
 
     constructor(private http: HttpClient) {}
 
     public getAllBenchmarks(): Observable<Benchmark[]> {
-        return this.http.get<Benchmark[]>(`${this.baseLocalUrl}/all`);
+        return this.http.get<Benchmark[]>(`${this.baseDeployUrl}/all`);
     }
   }

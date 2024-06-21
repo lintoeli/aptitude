@@ -9,12 +9,12 @@ import { Project } from "src/app/models/project.model";
   export class ProjectAPIService {
 
     private baseLocalUrl = 'http://localhost:8080/projects'; // URL servidor local
-    private baseDeployUrl = ''; // URL servidor remoto
+    private baseDeployUrl = 'https://aptitude.diversolab.io/projects'; // URL servidor remoto
 
     constructor(private http: HttpClient) { }
   
     public getProjectByName(name: string): Observable<Project> {
-      return this.http.get<any>(`${this.baseLocalUrl}/by-name`, { params: { name } })
+      return this.http.get<any>(`${this.baseDeployUrl}/by-name`, { params: { name } })
         .pipe(
           map(data => {
             // Asumimos que el servidor devuelve un objeto que ya cumple con la interfaz Project
@@ -24,6 +24,6 @@ import { Project } from "src/app/models/project.model";
     }
 
     public getAllProjects(): Observable<Project[]> {
-        return this.http.get<Project[]>(`${this.baseLocalUrl}/all`);
+        return this.http.get<Project[]>(`${this.baseDeployUrl}/all`);
     }
   }
